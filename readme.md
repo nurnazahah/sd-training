@@ -1,6 +1,6 @@
 # Day-0
 
-## Topic: Topic - System/Tool Setup Check. GitHub ID creation
+## Topic: System/Tool Setup Check. GitHub ID creation
 
 What is package?
 
