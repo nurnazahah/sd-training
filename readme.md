@@ -52,7 +52,32 @@ This is my first repository
 
 ##### Lab introduction
 
+![](day1labintro.JPG)
 
+##### Lab part 1
+
+Scripting
+
+![](day1labpart1a.JPG)
+
+Output
+
+![](day1labpart1.JPG)
+
+
+##### Lab part 2 
+
+Scripting to open GVIM
+
+![](day1labpart2vim.JPG)
+
+RTL code for design
+
+![](day1labpart2design.JPG)
+
+RTL code for test bench
+
+![](day1labpart2tb.JPG)
 
 
 
