@@ -35,3 +35,17 @@ Software (HLL) -> System software (assembly language) -> Hardware (machine langu
 This is my first repository
 
 ![](day0lab.JPG)
+
+
+# Day-1 
+
+## Topic: Introduction to Verilog RTL design and Synthesis
+
+### Lab Result
+
+#### Lab introduction
+
+
+
+
+
