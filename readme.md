@@ -34,4 +34,4 @@ Software (HLL) -> System software (assembly language) -> Hardware (machine langu
 
 This is my first repository
 
-![](day0labs.JPG)
+![](day0lab.JPG)
