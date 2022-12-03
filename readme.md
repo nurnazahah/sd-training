@@ -41,8 +41,7 @@ Software (HLL) -> System software (assembly language) -> Hardware (machine langu
 
 This is my first repository
 
-![](day0lab.JPG)
-
+![day0lab](https://user-images.githubusercontent.com/118953917/205441391-ee1d548a-1eb0-48d3-a22e-080881c0d0d9.JPG)
 
 ## Day-1 
 
