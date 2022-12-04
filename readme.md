@@ -51,32 +51,31 @@ This is my first repository
 
 ##### Lab introduction
 
-![](day1labintro.JPG)
+![day1labintro](https://user-images.githubusercontent.com/118953917/205478289-f1f31100-d90c-42d8-ab91-404251bc7237.JPG)
 
 ##### Lab part 1
 
 Scripting
 
-![](day1labpart1a.JPG)
+![day1labpart1a](https://user-images.githubusercontent.com/118953917/205478292-37015dc0-e14f-4e31-91fe-8e3df12f4000.JPG)
 
 Output
 
-![](day1labpart1.JPG)
-
+![day1labpart1](https://user-images.githubusercontent.com/118953917/205478290-20276c56-01f4-427e-a70d-2a2ad3acfdcc.JPG)
 
 ##### Lab part 2 
 
 Scripting to open GVIM
 
-![](day1labpart2vim.JPG)
+![day1labpart2vim](https://user-images.githubusercontent.com/118953917/205478288-b38d4f85-aa00-450a-a0ad-a8f67978de91.JPG)
 
 RTL code for design
 
-![](day1labpart2design.JPG)
+![day1labpart2design](https://user-images.githubusercontent.com/118953917/205478285-dd6a5cd0-7994-4e97-b63b-b80663691645.JPG)
 
 RTL code for test bench
 
-![](day1labpart2tb.JPG)
+![day1labpart2tb](https://user-images.githubusercontent.com/118953917/205478287-a7b8c191-4274-40a8-b4b1-a0c627ca6c92.JPG)
 
 
 
