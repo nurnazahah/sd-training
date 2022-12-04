@@ -138,9 +138,9 @@ To convert RTL file to the linked and specified gates design
 
 ![day1lab2part1c](https://user-images.githubusercontent.com/118953917/205480494-e1d1f3b2-2dfb-473a-8a9f-a9168437f5ed.JPG)
 
-internal signal = 0
-input signal = 3
-output signal = 1
+* internal signal = 0
+* input signal = 3
+* output signal = 1
 
 ![day1lab2part1d](https://user-images.githubusercontent.com/118953917/205480497-5f429c27-c9ac-4a65-9dae-c35b530aed6c.JPG)
 
