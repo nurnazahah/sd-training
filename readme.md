@@ -49,16 +49,22 @@ This is my first repository
 
 ### Topic: Introduction to Verilog RTL design and Synthesis
 
+
+
 #### Lab Result
 
-**Lab introduction**
+###############################################################################################
+
+**Lab 1 introduction**
 
 Clone the github.
 *	git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
 
 ![day1labintro](https://user-images.githubusercontent.com/118953917/205478289-f1f31100-d90c-42d8-ab91-404251bc7237.JPG)
 
-**Lab part 1**
+
+
+**Lab 1 part 1**
 
 **Scripting**
 
@@ -79,7 +85,9 @@ When sel=0; the output is toggling and following input i0 which is 0. Whereas, w
 
 ![day1labpart1](https://user-images.githubusercontent.com/118953917/205478290-20276c56-01f4-427e-a70d-2a2ad3acfdcc.JPG)
 
-**Lab part 2**
+
+
+**Lab 1 part 2**
 
 **Scripting to open GVIM**
 
@@ -100,7 +108,10 @@ To view the design and test bench RTL codes.
 
 ![day1labpart2tb](https://user-images.githubusercontent.com/118953917/205478287-a7b8c191-4274-40a8-b4b1-a0c627ca6c92.JPG)
 
-**Lab part 3**
+
+###############################################################################################
+
+**Lab 2**
 
 **Scripting**
 
