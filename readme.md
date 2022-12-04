@@ -43,27 +43,31 @@ This is my first repository
 
 ![day0lab](https://user-images.githubusercontent.com/118953917/205441391-ee1d548a-1eb0-48d3-a22e-080881c0d0d9.JPG)
 
+
+
 ## Day-1 
 
 ### Topic: Introduction to Verilog RTL design and Synthesis
 
 #### Lab Result
 
-##### Lab introduction
+**Lab introduction**
 
 Clone the github.
 *	git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
 
 ![day1labintro](https://user-images.githubusercontent.com/118953917/205478289-f1f31100-d90c-42d8-ab91-404251bc7237.JPG)
 
-##### Lab part 1
+**Lab part 1**
 
 **Scripting**
 
 Change directory to verilog_files, make a compiler/driver takes the Verilog input and generate the output format.
 *	iverilog good_mux.v tb_good_mux.v
+
 Operating system that are executables, object code, and, in later systems, shared libraries.
 *	./a.out
+
 To view the output waveform of the design.
 *	gtkwave tb_good_mux.vcd
 
@@ -75,7 +79,7 @@ When sel=0; the output is toggling and following input i0 which is 0. Besides, w
 
 ![day1labpart1](https://user-images.githubusercontent.com/118953917/205478290-20276c56-01f4-427e-a70d-2a2ad3acfdcc.JPG)
 
-##### Lab part 2 
+**Lab part 2**
 
 **Scripting to open GVIM**
 
