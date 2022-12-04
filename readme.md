@@ -55,7 +55,7 @@ This is my first repository
 
 ###############################################################################################
 
-**Lab 1 introduction**
+**Lab 1 Introduction to iverilog and GTKwave**
 
 Clone the github.
 *	git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
@@ -111,7 +111,7 @@ To view the design and test bench RTL codes.
 
 ###############################################################################################
 
-**Lab 2**
+**Lab 2 Introduction to yosys and logic synthesis**
 
 **Scripting**
 
