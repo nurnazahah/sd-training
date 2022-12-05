@@ -75,9 +75,9 @@ This is my first repository
 ![image](https://user-images.githubusercontent.com/118953917/205529661-03507326-a34a-4a8e-8c28-f357ad5c721d.png)
 
 
-#### Lab Result
-
 ###############################################################################################
+
+#### Lab Result
 
 **Lab 1 Introduction to iverilog and GTKwave**
 
@@ -159,6 +159,8 @@ To view the design and test bench RTL codes.
 
 
 ###############################################################################################
+
+#### Lab Result
 
 **Lab 2 Introduction to yosys and logic synthesis**
 
