@@ -58,8 +58,8 @@ This is my first repository
 * Implementation of the specifications where specifications need to be verified by simulating the design.
 * Tool used: iVerilog
 
-**Design**: Actual verilog code or the set of of verilog codes to meet the required specifications.
-**Test bench**: Setup to apply stimulus/test vectors into the design to check its functionality as well as checking whether the design is obeying the required specifications or not.
+* **Design**: Actual verilog code or the set of of verilog codes to meet the required specifications.
+* **Test bench**: Setup to apply stimulus/test vectors into the design to check its functionality as well as checking whether the design is obeying the required specifications or not.
 
 **How simulator works?**
 * Looks for changes in the input signals in which simulator is looking for changes in the values of the inputs.
