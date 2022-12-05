@@ -142,6 +142,13 @@ To view the design and test bench RTL codes.
 * Tool used to convert RTL to netlist.
 * Tool used: yosys
 
+**yosys setup**
+
+
+![image](https://user-images.githubusercontent.com/118953917/205531090-c5df6743-c213-4e69-b5e4-7964e31f721b.png)
+
+
+
 **Logic synthesis flow**
 1. RTL to gate level translation.
 2. Design is converted to gates and connections are made between gates.
