@@ -241,7 +241,7 @@ i1 = wire_1 = primary input
 
 sel = wire_2 = primary input
 
-y = wire_3 = primary output**
+y = wire_3 = primary output
 
 
 ![day1lab2part3b-op](https://user-images.githubusercontent.com/118953917/205480490-1e99dd0e-1c56-4b55-b651-e195a2518717.JPG)
