@@ -49,6 +49,29 @@ This is my first repository
 
 ### Topic: Introduction to Verilog RTL design and Synthesis
 
+### Introduction to iverilog and GTKwave
+
+What is simulator?
+* Tool used for checking design.
+
+What is RTL?
+* Implementation of the specifications where specifications need to be verified by simulating the design.
+* Tool used: iVerilog
+
+**Design**: Actual verilog code or the set of of verilog codes to meet the required specifications.
+**Test bench**: Setup to apply stimulus/test vectors into the design to check its functionality as well as checking whether the design is obeying the required specifications or not.
+
+How simulator works? 
+* Looks for changes in the input signals in which simulator is looking for changes in the values of the inputs.
+* Output is evaluated based upon the changes in the input. If there is no change in the input, hence there is no change in the output.
+
+![image](https://user-images.githubusercontent.com/118953917/205529453-f55fd8dc-02ba-4d61-8454-49294cf4c2fc.png)
+
+*notes: Design may have one or more primary input/output. Test bench doesn't have primary input/output.
+
+iVerilog based simulation flow
+
+![image](https://user-images.githubusercontent.com/118953917/205529661-03507326-a34a-4a8e-8c28-f357ad5c721d.png)
 
 
 #### Lab Result
@@ -108,6 +131,24 @@ To view the design and test bench RTL codes.
 
 ![day1labpart2tb](https://user-images.githubusercontent.com/118953917/205478287-a7b8c191-4274-40a8-b4b1-a0c627ca6c92.JPG)
 
+###############################################################################################
+
+
+
+
+### Introduction to yosys and logic synthesis
+
+What is synthesizer? 
+* Tool used to convert RTL to netlist.
+* Tool used: yosys
+
+Logic synthesis flow
+1. RTL to gate level translation.
+2. Design is converted to gates and connections are made between gates.
+3. Given out as a file called netlist.
+
+![image](https://user-images.githubusercontent.com/118953917/205530184-b02d1853-e943-446f-b7e1-8ddfeb446dea.png)
+
 
 ###############################################################################################
 
@@ -134,7 +175,7 @@ Synthesize the required module
 ![day1lab2part1b](https://user-images.githubusercontent.com/118953917/205480493-7ed726f9-69c3-4764-a3b5-0ab068172626.JPG)
 
 To convert RTL file to the linked and specified gates design 
-*	abc -libert ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+*	abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 
 ![day1lab2part1c](https://user-images.githubusercontent.com/118953917/205480494-e1d1f3b2-2dfb-473a-8a9f-a9168437f5ed.JPG)
 
