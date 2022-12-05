@@ -51,17 +51,17 @@ This is my first repository
 
 ### Introduction to iverilog and GTKwave
 
-What is simulator?
+**What is simulator?**
 * Tool used for checking design.
 
-What is RTL?
+**What is RTL (Register Transfer Level)?**
 * Implementation of the specifications where specifications need to be verified by simulating the design.
 * Tool used: iVerilog
 
 **Design**: Actual verilog code or the set of of verilog codes to meet the required specifications.
 **Test bench**: Setup to apply stimulus/test vectors into the design to check its functionality as well as checking whether the design is obeying the required specifications or not.
 
-How simulator works? 
+**How simulator works?**
 * Looks for changes in the input signals in which simulator is looking for changes in the values of the inputs.
 * Output is evaluated based upon the changes in the input. If there is no change in the input, hence there is no change in the output.
 
@@ -69,7 +69,7 @@ How simulator works?
 
 *notes: Design may have one or more primary input/output. Test bench doesn't have primary input/output.
 
-iVerilog based simulation flow
+**iVerilog based simulation flow**
 
 ![image](https://user-images.githubusercontent.com/118953917/205529661-03507326-a34a-4a8e-8c28-f357ad5c721d.png)
 
@@ -138,11 +138,11 @@ To view the design and test bench RTL codes.
 
 ### Introduction to yosys and logic synthesis
 
-What is synthesizer? 
+**What is synthesizer?** 
 * Tool used to convert RTL to netlist.
 * Tool used: yosys
 
-Logic synthesis flow
+**Logic synthesis flow**
 1. RTL to gate level translation.
 2. Design is converted to gates and connections are made between gates.
 3. Given out as a file called netlist.
