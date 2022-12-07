@@ -480,7 +480,9 @@ The output(q) will get trigger for each of the posedge clock
 
 ![day2lab3d-sync](https://user-images.githubusercontent.com/118953917/206196172-869cfea8-cf91-4d28-9ea7-12d6f051ca2a.JPG)
 
-*Notes: why there is no set/reset pin in flip flop
+Why there is no set/reset pin in flip flop?
+
+*Notes: The explaination figure is taken from the instructor's video.
 
 ![day2lab3e](https://user-images.githubusercontent.com/118953917/206197685-b429be30-5e18-4473-8cc0-6c6be62521a7.JPG)
 
