@@ -325,6 +325,8 @@ There are 2^5 = 32 possible inputs combinations of the design
 
 ![day2lab2a](https://user-images.githubusercontent.com/118953917/205945324-55bd0326-f8a5-4d03-a9ae-35fecba4d087.JPG)
 
+![day2labsnapshot](https://user-images.githubusercontent.com/118953917/206221522-0121818e-2323-45f1-b5ee-e4f90b282f58.JPG)
+
 >Invoke yosys, import liberty files, generate verilog file, synthesize module, convert RTL to gate design
 
 >> yosys
