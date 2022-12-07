@@ -325,7 +325,6 @@ There are 2^5 = 32 possible inputs combinations of the design
 
 ![day2lab2a](https://user-images.githubusercontent.com/118953917/205945324-55bd0326-f8a5-4d03-a9ae-35fecba4d087.JPG)
 
-![day2labsnapshot](https://user-images.githubusercontent.com/118953917/206221522-0121818e-2323-45f1-b5ee-e4f90b282f58.JPG)
 
 >Invoke yosys, import liberty files, generate verilog file, synthesize module, convert RTL to gate design
 
@@ -341,6 +340,7 @@ There are 2^5 = 32 possible inputs combinations of the design
 
 >> show multiple_modules 
 
+![day2labsnapshot](https://user-images.githubusercontent.com/118953917/206221522-0121818e-2323-45f1-b5ee-e4f90b282f58.JPG)
 
 ![day2lab2b](https://user-images.githubusercontent.com/118953917/205945334-4caede00-299d-491c-a7e0-39375bbe0cf0.JPG)
 
@@ -350,6 +350,8 @@ There are 2^5 = 32 possible inputs combinations of the design
 >> write_verilog multiple_modules_hier.v 
 
 >> write_verilog -noattr multiple_modules_hier.v 
+
+![day2labsnapshot2](https://user-images.githubusercontent.com/118953917/206225754-05701bd7-5443-445d-aed8-8eb55e224e67.JPG)
 
 >> !vim multiple_modules_hier.v 
 
@@ -377,6 +379,10 @@ for it that make it as good at delivering output current as a standard inverter,
 
 >> write_verilog -noattr multiple_modules_flat.v 
 
+![day2labsnapshot3](https://user-images.githubusercontent.com/118953917/206228210-253c783c-ab06-492c-a001-9e488cb1f726.JPG)
+
+![day2labsnapshot2](https://user-images.githubusercontent.com/118953917/206226306-a7cb7e4b-198f-43b6-8cc3-b42bb7d60fe7.JPG)
+
 >> !vim multiple_modules_flat.v 
 
 >> :vsp multiple_modules_hier.v
@@ -393,7 +399,11 @@ for it that make it as good at delivering output current as a standard inverter,
 
 ![day2lab2g](https://user-images.githubusercontent.com/118953917/206109393-2adda35f-075f-4eb1-84f7-92358aa00aca.JPG)
 
+![day2labsnapshot4](https://user-images.githubusercontent.com/118953917/206228219-fe0f4920-8508-46ba-a30a-16a5f3b29826.JPG)
+
 >> synth -top sub_module1
+
+![day2labsnapshot5](https://user-images.githubusercontent.com/118953917/206228224-a9440b9c-0b3d-4a87-87c9-28bcbdd08c02.JPG)
 
 Why sub module synth is used?
 * When we have multiple instances of the same module.
@@ -414,6 +424,8 @@ Why sub module synth is used?
 >> ./a.out
 
 >> gtkwave tb_dff_asyncres.vcd
+
+![day2labsnapshot6](https://user-images.githubusercontent.com/118953917/206229906-ec0c32dc-e73e-45a9-9a0d-07cf1f2af180.JPG)
 
 **Asynchronous output**
 
@@ -440,6 +452,8 @@ The output(q) will get trigger for each of the posedge clock
 
 ![day2lab3b-sync](https://user-images.githubusercontent.com/118953917/206151253-9bab416c-b665-410b-9f45-001837a711ea.JPG)
 
+![day2labsnapshot7](https://user-images.githubusercontent.com/118953917/206230621-52ef6192-bf17-4e83-b4a6-c4f8d9fd299b.JPG)
+
 >> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 
 >> read_verilog dff_asyncres.v 
@@ -447,6 +461,8 @@ The output(q) will get trigger for each of the posedge clock
 >> synth -top dff_asyncres 
 
 >> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+
+![day2labsnapshot8](https://user-images.githubusercontent.com/118953917/206231148-b9328505-72b6-4cbc-a9bd-610079ee6df8.JPG)
 
 >> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 
@@ -484,6 +500,8 @@ or
 
 >> synth -top mul2
 
+![day2labsnapshot9](https://user-images.githubusercontent.com/118953917/206231907-a80b18f5-a2e1-48d3-ba83-fb21f0ef31fe.JPG)
+
 >> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 
 >> show
@@ -503,6 +521,8 @@ or
 >> read_verilog mult_8.v 
 
 >> synth -top mult8
+
+![day2labsnapshot10](https://user-images.githubusercontent.com/118953917/206232431-8c004752-6d52-4921-a080-9aeb5f261db2.JPG)
 
 >> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 
