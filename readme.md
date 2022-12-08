@@ -541,3 +541,5 @@ or
 ![day2lab3i](https://user-images.githubusercontent.com/118953917/206213266-f33aa64a-7ad8-4d5c-a2f0-f22816f1445a.JPG)
 
 
+## Day-3
+
