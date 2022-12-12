@@ -847,6 +847,9 @@ When sel = 0, the output Y follows input i0. Whereas, when sel = 1, Y follows in
 
 ![day4lab1d](https://user-images.githubusercontent.com/118953917/206908455-ee27b998-7872-43be-afa5-a3e78081f96d.JPG)
 
+![day4lab1e](https://user-images.githubusercontent.com/118953917/206908470-50e59616-13df-4a22-9865-d16bce93badf.JPG)
+
+
 **Bad mux**
 
 >> iverilog bad_mux.v tb_bad_mux.v 
@@ -863,6 +866,19 @@ When sel = 0, the output Y follows input i0. Whereas, when sel = 1, Y follows in
 
 >> gtkwave tb_bad_mux.vcd 
 
+
+
+>> read_verilog bad_mux.v
+
+>> synth -top bad_mux
+
+>> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+
+>> write_verilog -noattr bad_mux_net.v 
+
+>> show
+
+
 **Bad mux**
 
 When there is activity on select, the inputs and output is toggling because it is depending on select.
@@ -876,17 +892,6 @@ The output Y is following both inputs i0 and i1 depending on select.
 * When select is low, the output is following i0.
 * Whereas when select is high, the output is following i1.
 
-![day4lab1e](https://user-images.githubusercontent.com/118953917/206908470-50e59616-13df-4a22-9865-d16bce93badf.JPG)
-
->> read_verilog bad_mux.v
-
->> synth -top bad_mux
-
->> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
-
->> write_verilog -noattr bad_mux_net.v 
-
->> show
 
 ![day4lab1f](https://user-images.githubusercontent.com/118953917/206908481-a16c2c0f-c359-4482-bc26-667c1d6dac7e.JPG)
 
