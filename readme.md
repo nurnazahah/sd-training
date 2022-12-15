@@ -7,6 +7,7 @@
 * [ Day 2 - Timing libs (QTMs/ETMs), hierarchical vs flat synthesis and efficient flop coding styles ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-2)
 * [ Day 3 - Combinational and sequential optimizations ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-3)
 * [ Day 4 - GLS, blocking vs non-blocking and Synthesis-Simulation mismatch ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-4)
+* [ Day 5 - Design For Testability (DFT) ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-5)
 
 ## Day-0
 
@@ -931,4 +932,14 @@ The output Y is following both inputs i0 and i1 depending on select.
 
 
 ## Day-5
+
+### Topic: Design for Testability (DFT)
+
+![day5laba](https://user-images.githubusercontent.com/118953917/207751320-915e6b36-22df-4738-b02a-71eaed5dac6a.jpg)
+
+![day5labb](https://user-images.githubusercontent.com/118953917/207751341-aed40127-7b30-48be-9256-0c5516180810.jpg)
+
+![day5labc](https://user-images.githubusercontent.com/118953917/207751362-8e005bb9-29a6-4e29-9009-57eab491c8e5.jpg)
+
+![day5labd](https://user-images.githubusercontent.com/118953917/207751379-bfe5528a-7178-4a03-8d26-c4ba0420da04.jpg)
 
