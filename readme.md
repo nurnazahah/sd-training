@@ -928,3 +928,7 @@ The output Y is following both inputs i0 and i1 depending on select.
 
 ![day4lab2c](https://user-images.githubusercontent.com/118953917/206908549-ffe180e3-22e8-4088-a58e-79ac7255f582.JPG)
 
+
+
+## Day-5
+
