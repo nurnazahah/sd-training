@@ -935,11 +935,12 @@ The output Y is following both inputs i0 and i1 depending on select.
 
 ### Topic: Design for Testability (DFT)
 
-![day5laba](https://user-images.githubusercontent.com/118953917/207751320-915e6b36-22df-4738-b02a-71eaed5dac6a.jpg)
+![day5laba](https://user-images.githubusercontent.com/118953917/207753791-c4b68f91-a456-4976-a15a-9a292d4ccf9a.jpg)
 
-![day5labb](https://user-images.githubusercontent.com/118953917/207751341-aed40127-7b30-48be-9256-0c5516180810.jpg)
+![day5labb](https://user-images.githubusercontent.com/118953917/207753809-dd158701-ce7d-46fd-8c49-e0c1f0409523.jpg)
 
-![day5labc](https://user-images.githubusercontent.com/118953917/207751362-8e005bb9-29a6-4e29-9009-57eab491c8e5.jpg)
+![day5labc](https://user-images.githubusercontent.com/118953917/207753827-2f4ce4fa-792c-419b-a9f4-aef44393aa33.jpg)
 
-![day5labd](https://user-images.githubusercontent.com/118953917/207751379-bfe5528a-7178-4a03-8d26-c4ba0420da04.jpg)
+![day5labd](https://user-images.githubusercontent.com/118953917/207753842-b85cc945-711c-40f7-baa5-97e5cc95d8b1.jpg)
+
 
