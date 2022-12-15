@@ -943,4 +943,4 @@ The output Y is following both inputs i0 and i1 depending on select.
 
 ![day5labd](https://user-images.githubusercontent.com/118953917/207753842-b85cc945-711c-40f7-baa5-97e5cc95d8b1.jpg)
 
-
+![day5labe](https://user-images.githubusercontent.com/118953917/207802264-c82e4401-7a91-4dd6-b829-1d190c7b458b.jpg)
