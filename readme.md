@@ -13,6 +13,12 @@
 
 ### Topic: System/Tool Setup Check. GitHub ID creation
 
+<details>
+  <summary>Theory</summary>
+ 
+
+### Theory
+
 **What is package?**
 
 It is the material that contains semiconductor device attached with a die using wire bonding. The chip is also correlated with the pads, core, macros and foundry IPs.
@@ -39,19 +45,27 @@ Software (HLL) -> System software (assembly language) -> Hardware (machine langu
 
 ![image](https://user-images.githubusercontent.com/118953917/203914970-87aa56d5-4e03-408d-8745-709810468620.png)
 
-###############################################################################################
+</details>
 
-#### Lab Result
+<details>
+  <summary>Lab</summary>
+ 
+### Lab
+ 
+**Lab Result**
 
 This is my first repository
 
 ![day0lab](https://user-images.githubusercontent.com/118953917/205441391-ee1d548a-1eb0-48d3-a22e-080881c0d0d9.JPG)
-
+</details>
 
 
 ## Day-1 
 
 ### Topic: Introduction to Verilog RTL design and Synthesis
+<details>
+  <summary>Introduction to iverilog and GTKwave</summary>
+
 
 ### Introduction to iverilog and GTKwave
 
@@ -77,11 +91,10 @@ This is my first repository
 **iVerilog based simulation flow**
 
 ![image](https://user-images.githubusercontent.com/118953917/205529661-03507326-a34a-4a8e-8c28-f357ad5c721d.png)
-
-
-###############################################################################################
-
-#### Lab Result
+</details>
+  
+<details>
+  <summary>Lab 1</summary> 
 
 **Lab 1 Introduction to iverilog and GTKwave**
 
@@ -136,10 +149,6 @@ To view the design and test bench RTL codes.
 
 ![day1labpart2tb](https://user-images.githubusercontent.com/118953917/205478287-a7b8c191-4274-40a8-b4b1-a0c627ca6c92.JPG)
 
-###############################################################################################
-
-
-
 
 ### Introduction to yosys and logic synthesis
 
@@ -160,11 +169,10 @@ To view the design and test bench RTL codes.
 3. Given out as a file called netlist.
 
 ![image](https://user-images.githubusercontent.com/118953917/205530184-b02d1853-e943-446f-b7e1-8ddfeb446dea.png)
-
-
-###############################################################################################
-
-#### Lab Result
+</details>
+  
+<details>
+  <summary>Lab 2</summary> 
 
 **Lab 2 Introduction to yosys and logic synthesis**
 
@@ -250,17 +258,16 @@ y = wire_3 = primary output
 
 ![day1lab2part3b-op](https://user-images.githubusercontent.com/118953917/205480490-1e99dd0e-1c56-4b55-b651-e195a2518717.JPG)
 
+</details>
 
 
 ## Day-2 
 
 ### Topic: Timing libs (QTMs/ETMs), hierarchical vs flat synthesis and efficient flop coding styles
+<details>
+  <summary>Lab 1: Introduction to timing .libs</summary> 
 
-###############################################################################################
-
-#### Lab Result
-
-**Lab 1 Introduction to timing .libs**
+**Lab 1: Introduction to timing .libs**
 
 >To view the gvim 
 >> vim ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
@@ -319,7 +326,10 @@ There are 2^5 = 32 possible inputs combinations of the design
 
 ![day2lab1f](https://user-images.githubusercontent.com/118953917/205929860-c9e146e9-d910-4abc-a65a-cbd8a59505f7.JPG)
 
-
+</details>
+  
+<details>
+  <summary>Lab 2: Hierarchical vs Flat Synthesis</summary> 
 
 **Lab 2 Hierarchical vs Flat Synthesis**
 
@@ -415,8 +425,12 @@ Why sub module synth is used?
 
 ![day2lab2h](https://user-images.githubusercontent.com/118953917/206114375-27aaf964-105f-4116-b772-2f50f3cf9008.JPG)
 
+ </details>
+  
+<details>
+  <summary>Lab 3: Various Flop Coding Styles and optimization</summary> 
 
-**Lab 3 Various Flop Coding Styles and optimization**
+**Lab 3: Various Flop Coding Styles and optimization**
 
 **Comparison of asynchronous-synchronous, asynchronous, synchronous set, and synchronous**
 
@@ -542,12 +556,16 @@ or
 *Notes: the figure at the top is taken from the instructor's video.
 
 ![day2lab3i](https://user-images.githubusercontent.com/118953917/206213266-f33aa64a-7ad8-4d5c-a2f0-f22816f1445a.JPG)
-
+</details>
+ 
 
 ## Day-3
 
 
 ### Topic: Timing libs (QTMs/ETMs), hierarchical vs flat synthesis and efficient flop coding styles
+
+<details>
+  <summary>Introduction to optimisations</summary> 
 
 #### Introduction to optimisations
 
@@ -591,6 +609,11 @@ State optimisation, retiming, and sequential logic cloning
 * Retiming: a technique for optimizing sequential circuits. It repositions the registers in a circuit leaving the combinational portion of circuitry untouched. The objective of retiming is to find a circuit with the minimum number of registers for a specified clock period.
 
 ![day3lab1e](https://user-images.githubusercontent.com/118953917/206386303-6b5a0417-de0c-4f40-afca-cb20ed45878d.JPG)
+ 
+ </details>
+  
+<details>
+  <summary>Lab 1: Combinational Logic Optimisations</summary> 
 
 #### Lab 1: Combinational Logic Optimisations
 
@@ -654,7 +677,10 @@ multiple_module_opt2
 
 ![day3lab2m](https://user-images.githubusercontent.com/118953917/206708534-e7a7330b-fa5c-4cac-bf1f-f2bcb32e8c72.JPG)
 
-
+ </details>
+  
+<details>
+  <summary>Lab 2: Sequential Logic Optimisations</summary> 
 
 #### Lab 2: Sequential Logic Optimisations
 
@@ -702,7 +728,10 @@ For dff_const1, it does inferred DFF, while for dff_const2, it does not inferred
 
 ![day3lab2k](https://user-images.githubusercontent.com/118953917/206620000-8254049a-3fdf-497d-a026-d3d04a3899da.JPG)
 
-
+ </details>
+  
+<details>
+  <summary>Lab 3: Sequential optimzations for unused outputs</summary> 
 
 #### Lab 3: Sequential optimzations for unused outputs
 
@@ -737,11 +766,15 @@ Unused output optimisation
 >> synth -top counter_opt
 
 ![day3lab3c](https://user-images.githubusercontent.com/118953917/206652215-e90e344e-65db-4936-8977-0e0b92fc1075.JPG)
+ </details>
 
 
-# Day 4
+## Day 4
 
 ### Topic: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
+
+<details>
+  <summary>Introduction to GLS, blocking vs non-blocking and Synthesis-Simulation mismatch</summary> 
 
 #### Introduction to GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
 
@@ -799,10 +832,10 @@ Caveats with blocking statements
 
 ![day4labintroe](https://user-images.githubusercontent.com/118953917/206893870-a8421413-8d09-4017-9738-c667fd4a17c4.JPG)
 
-
-###############################################################################################
-
-#### Lab Result
+</details>
+  
+<details>
+  <summary>Lab 1: GLS Synth Sim Mismatch</summary> 
 
 #### Lab 1: GLS Synth Sim Mismatch
 
@@ -896,7 +929,11 @@ The output Y is following both inputs i0 and i1 depending on select.
 
 ![day4lab1f](https://user-images.githubusercontent.com/118953917/206908481-a16c2c0f-c359-4482-bc26-667c1d6dac7e.JPG)
 
-
+</details>
+  
+<details>
+  <summary>Lab 2: Synth sim mismatch blocking statement</summary> 
+                                         
 #### Lab 2: Synth sim mismatch blocking statement
 
 >> gvim blocking_caveat.v
@@ -928,13 +965,16 @@ The output Y is following both inputs i0 and i1 depending on select.
 >> gtkwave tb_blocking_caveat.vcd 
 
 ![day4lab2c](https://user-images.githubusercontent.com/118953917/206908549-ffe180e3-22e8-4088-a58e-79ac7255f582.JPG)
+</details>
 
-
-
+                                         
 ## Day-5
 
 ### Topic: Design for Testability (DFT)
-
+</details>
+  
+<details>
+  <summary>Theory</summary> 
 
 ![day5lab1a](https://user-images.githubusercontent.com/118953917/207813102-6edfd30b-864e-4dae-a1db-bf4eff618a24.jpg)
 
@@ -955,5 +995,5 @@ The output Y is following both inputs i0 and i1 depending on select.
 ![day5lab1i](https://user-images.githubusercontent.com/118953917/207813093-acf01c53-82db-410c-8bf9-b1002a451019.jpg)
 
 ![day5lab1j](https://user-images.githubusercontent.com/118953917/207813096-8ffbe723-1e2b-44ee-ac7d-9434eb65822c.jpg)
-
+</details>
 
