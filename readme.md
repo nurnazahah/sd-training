@@ -8,6 +8,7 @@
 * [ Day 3 - Combinational and sequential optimizations ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-3)
 * [ Day 4 - GLS, blocking vs non-blocking and Synthesis-Simulation mismatch ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-4)
 * [ Day 5 - Design For Testability (DFT) ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-5)
+* [ Day 6 - Introduction to Logic Synthesis ](https://github.com/nurnazahah/sd-training/edit/main/readme.md#day-6)
 
 ## Day-0
 
