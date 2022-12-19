@@ -1137,7 +1137,8 @@ How to decide for the correct implementation of the design?
   ![day6lab1h](https://user-images.githubusercontent.com/118953917/208397835-39698526-7852-4c02-96c3-03faa67aac11.jpg)
   
 **Implementation flow of ASIC**
-Steps in converting RTL to the physical database (GDS format).
+
+  Steps in converting RTL to the physical database (GDS format).
 
 
   ![day6lab1i](https://user-images.githubusercontent.com/118953917/208401949-378ad2bf-7629-4ffd-b903-a63c67810002.jpg)
