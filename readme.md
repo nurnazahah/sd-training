@@ -1435,7 +1435,7 @@ Another way to run the TCL script is by sourcing the gvim file using tcl scripti
 
   
   
-## Day-8
+## Day-7
 
 ### Topic: Basic SDC constraints
 
@@ -1749,7 +1749,7 @@ Setup time of rising/falling edge of the clock pin
   
 </details> 
 
-## Day-7
+## Day-8
 
 ### Topic: Advanced SDC Constraints
 
