@@ -12,6 +12,7 @@
 * [ Day 7 - Basic SDC constraints](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-7)
 * [ Day 8 - Advanced SDC Constraints ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-8)
 * [ Day 9 - Optimizations ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-9)
+* [ Day 10 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-10)
 
 ## Day-0
 
