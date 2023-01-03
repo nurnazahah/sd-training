@@ -13,6 +13,7 @@
 * [ Day 8 - Advanced SDC Constraints ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-8)
 * [ Day 9 - Optimizations ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-9)
 * [ Day 10 - Quality of Results (QOR) ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-10)
+* [ Day 11 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-11)
 
 ## Day-0
 
