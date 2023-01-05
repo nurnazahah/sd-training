@@ -14,7 +14,7 @@
 * [ Day 9 - Optimizations ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-9)
 * [ Day 10 - Quality of Results (QOR) ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-10)
 * [ Day 11 - Introduction to the BabySoC ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-11)
-* [ Day 12 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-12)
+* [ Day 12 - BabySoC Modelling ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-12)
 
 ## Day-0
 
