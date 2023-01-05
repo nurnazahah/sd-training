@@ -3747,7 +3747,7 @@ In the early stages of the design cycle, if a block does not have a netlist yet,
 
  </details>
 
-## Day-11
+## Day-12
 
 ### Topic: BabySoC Modelling
 
@@ -4019,6 +4019,8 @@ dve -full64
 ![image](https://user-images.githubusercontent.com/118953917/210831067-ad8d9cd5-15de-432b-bcb8-08574be2f5ba.png)
   
 **Block diagram of upcounter**
+	
+*Source: https://www.electronics-tutorials.ws/counter/count_3.html*
   
 ![image](https://user-images.githubusercontent.com/118953917/210831238-90c5c31c-35fd-4f46-bdb8-5c2ebfbaae03.png)
   
