@@ -3993,6 +3993,29 @@ dve -full64
 **Output waveform**
   
 ![image](https://user-images.githubusercontent.com/118953917/210830355-0a3cec67-4fde-4b67-b127-6bf3f420c1a6.png)
+	
+> Simulating and modelling all 3 IP’s (VSDBabySoC)
+```
+cd /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/babysoc/
+git clone https://github.com/manili/VSDBabySoCcd 
+cd /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/babysoc/VSDBabySoC/src/module
+csh
+vcs -sverilog vsdbabysoc.v testbench.v
+./simv 
+dve -full64 
+```
+	
+**Error compiling**
+	
+![image](https://user-images.githubusercontent.com/118953917/210921496-35b88f16-4ba4-4f63-9db9-dd690f781d61.png)
+
+**Error fixing**
+	
+![image](https://user-images.githubusercontent.com/118953917/210921774-76e02aed-7aac-44f3-97b8-4b43ad26b317.png)
+
+**Output waveform**
+	
+![image](https://user-images.githubusercontent.com/118953917/210921842-71f590f0-0b36-41b2-aed5-5d745cdf81dd.png)
   
 </details>
 
