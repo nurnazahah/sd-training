@@ -15,6 +15,8 @@
 * [ Day 10 - Quality of Results (QOR) ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-10)
 * [ Day 11 - Introduction to the BabySoC ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-11)
 * [ Day 12 - BabySoC Modelling ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-12)
+* [ Day 13 - Post-synthesis simulation ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#topic-post-synthesis-simulation)
+* [ Day 14 - Synopsys DC and Timing Analysis ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-14)
 
 ## Day-0
 
