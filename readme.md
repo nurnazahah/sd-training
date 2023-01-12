@@ -4186,7 +4186,7 @@ rsync -rv rsync.zsc11.intel.com:/nfs/site/disks/zsc11_mip_xmphy_0021/users/nazah
 </details>
 
 <details>
-  <summary>Lab: Synthesize</summary>
+  <summary>Lab: Synthesis</summary>
  
 ### Synthesizing the code
   
@@ -4283,12 +4283,36 @@ write -f verilog -out avsd_pll_1v8_net.v
   
 ![image](https://user-images.githubusercontent.com/118953917/211707102-80af24c0-0e64-4ad3-b929-781e3ccb2e43.png)
   
+  
+  
+### VSDBabySoC
+  
+```
+sh gvim .synopsys_dc.setup
+set target_library {/nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/sky130_fd_sc_hd__tt_025C_1v80.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsddac.db}
+set link_library {* nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/sky130_fd_sc_hd__tt_025C_1v80.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsddac.db}
+```
+  
+```
+echo $target_library
+echo $link_library
+read_file {mod_mythcore_test.v mod_avsd_pll_1v8.v mod_avsddac.v clk_gate.v mod_vsdbabysoc.v} -autoread -format verilog -top vsdbabysoc
+compile
+write -f verilog -out vsdbabysoc_net1.v
+``` 
+  
+![image](https://user-images.githubusercontent.com/118953917/211965920-d89fad34-d839-436e-b114-35a916b7c300.png)
+
+**Netlist of VSDBabySoC**
+  
+![image](https://user-images.githubusercontent.com/118953917/211966018-18e67c13-b0ba-48db-9f4c-dce2e935e507.png)
+  
 </details>
 
 <details>
-  <summary>Lab: Post-synthesize</summary>
+  <summary>Lab: Post-synthesize and comparisons</summary>
  
-### Post-synthesizing simulations
+### Post-synthesizing simulations 
   
 **rvmyth_avsddac.v**
   
@@ -4371,3 +4395,98 @@ By using constraints
 
   
 </details> 
+
+<details>
+  <summary>Task and labs</summary>
+ 
+### Task
+  
+**Steps to read PVT corners of each timing libs provided**
+ 
+### Converting .lib to .db using lc_shell
+  
+```
+cd /nfs/site/disks/zsc11_mip_xmphy_0021/users/nazahah/partition/training
+git clone https://github.com/Geetima2021/vsdpcvrd.git
+/nfs/site/disks/zsc11_mip_xmphy_0021/users/nazahah/partition/training/vsdpcvrd/resources/timing_libs
+lc_shell
+read_lib sky130_fd_sc_hd__ff_100C_1v65.lib > 100C_1v65.rpt                         (Error reading lib file -> remove the line in lib with those errors)
+```
+  
+**Error debugging -> grepping errors from .rpt file**
+  
+![image](https://user-images.githubusercontent.com/118953917/211825198-f8a621b1-d89e-49c7-9ddb-ca2610a95d4b.png)
+
+**Modification of .lib file**
+  
+![image](https://user-images.githubusercontent.com/118953917/211825404-41ac67e1-fd19-48be-8488-3c676300ca5b.png)
+
+```
+read_lib sky130_fd_sc_hd__ff_100C_1v65.lib
+write_lib sky130_fd_sc_hd__ff_100C_1v65 -format db -output sky130_fd_sc_hd__ff_100C_1v65.db
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/211831483-dcf4b51a-3a58-4ada-a452-7ad59b264736.png)
+
+> Moving converted .db file from cheetah environment (santa clara zsc11) to png site 
+```
+/nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d14/timing_libs                (Penang site)
+rsync -rv rsync.zsc11.intel.com:/nfs/site/disks/zsc11_mip_xmphy_0021/users/nazahah/partition/training/vsdpcvrd/resources/timing_libs/sky130_fd_sc_hd__ff_100C_1v65.db .    ("." stands for current directory)
+```
+  
+### Synthesizing and optimizing
+  
+```
+cd /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d14/timing_libs
+sh gvim cons.sdc
+```
+  
+**Setting the constraints**
+  
+![image](https://user-images.githubusercontent.com/118953917/212027191-97e051b3-1d26-431d-be55-d5b558625ae0.png)
+  
+```
+sh gvim .synopsys_dc.setup
+ 
+set target_library {/nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d14/timing_libs/sky130_fd_sc_hd__ff_100C_1v65.db}
+set link_library {* /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/db_files/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d14/timing_libs/sky130_fd_sc_hd__ff_100C_1v65.db} 
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/212027266-f27dc504-4949-4892-aa64-c916e2982384.png)
+  
+```
+dc_shell
+echo $target_library
+echo $link_library
+read_file {mod_mythcore_test.v mod_avsd_pll_1v8.v mod_avsddac.v clk_gate.v mod_vsdbabysoc.v} -autoread -format verilog -top vsdbabysoc
+link
+read_sdc cons.sdc
+compile_ultra
+report_qor
+```
+
+![image](https://user-images.githubusercontent.com/118953917/212027341-33ed43df-6a54-4e8c-b802-3b9fe5eefb12.png)
+  
+*Note: Change the synopsis setup and repeat the same steps for all PVT corners files*
+*Don't forget to source new edited .synopsys_dc.setup*
+  
+**Short discussions regarding PVT corners**
+  
+* WNS (Worst Negative Slack) -> slack for the timing path with worst timing failure 
+  + If WNS is positive, the path has passed. Else, it failed. 
+  + Applicable to setup time
+  
+* WHS (Worst Hole Slack) -> slack for hold path with worst timing failure
+  
+* TNS (Total Negative Slack) -> sum of the total negative path slacks, or the sum of all WNS
+  + If TNS = 0, the design meets timing. Else, if it is positive, there is negative slack in the design (hence the design fails). 
+  + TNS cannot be negative
+  
+* THS (Total Hold Slack) ->  sum of the total negative hold slack paths, or the sum of all WHS
+  + If THS = 0, the design passed. Else, if it is positive, the design failed.
+  
+**Summary of all PVT corners provided**
+  
+![image](https://user-images.githubusercontent.com/118953917/212031365-7279d9cc-b689-42d5-9dcb-c22d24204deb.png)
+
+</details>
