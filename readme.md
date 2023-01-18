@@ -5570,11 +5570,13 @@ magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/
   <summary>Lecture 1: Timing threshold definitions</summary>
  
 ### Timing characterization
+	
+![image](https://user-images.githubusercontent.com/118953917/213112154-13441ad3-95ca-48d0-b8f2-90150fa96b32.png)
   
 * Slew low rise: defines the lowest state (0V) of the power supply which is closer to zero. Typical value is about 20% from bottom power supply. But this is not enough to calculate the slew, we need the slew high rise threshold as well.
 * Slew high rise: typical value is about 20% from the top of power supply. To calculate the amount of slew, take the timing difference among those 2 variables
   
-![image](https://user-images.githubusercontent.com/118953917/213112154-13441ad3-95ca-48d0-b8f2-90150fa96b32.png)
+![image](https://user-images.githubusercontent.com/118953917/213134921-021a6cf2-dec0-4a7e-867d-31cecbf1ef48.png)
 
 * Similar definition applies for the falling waveform
 * We also have thresholds for the delays 
