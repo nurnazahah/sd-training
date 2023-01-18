@@ -18,7 +18,7 @@
 * [ Day 13 - Post-synthesis simulation ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-13)
 * [ Day 14 - Synopsys DC and Timing Analysis ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-14)
 * [ Day 15 - Inception of EDA and PDK ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-15)
-* [ Day 16 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-16)
+* [ Day 16 - Understand importance of good floorplan vs bad floor plan and introduction to library cells](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-16)
 
 ## Day-0
 
