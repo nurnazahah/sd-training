@@ -6739,8 +6739,8 @@ magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/
 * The combinational delay of a path will look as shown above.
 * The next challenge comes in performing timing analysis with multiple ideal clocks.
   
-![image](https://user-images.githubusercontent.com/118953917/214793711-7f08ec10-1a94-4711-9cf2-f76aae4c3c01.png)
-
+![image](https://user-images.githubusercontent.com/118953917/214900663-256785e1-7607-443d-9d9d-6715a6de46b4.png) 
+	
 </details>
 
 <details>
@@ -6850,8 +6850,8 @@ report_checks -from _41952_ -through _41879_
 * The wires for the clock routes each will have resistances and huge number of capacitances, and with the long routing, there will be signal integrity issues.
 * Thus, to maintain the signal integrity, we need buffering on these nets.
   
-![image](https://user-images.githubusercontent.com/118953917/214894137-e02e16bc-0c0f-48db-8336-aa281c437c55.png)
-  
+![image](https://user-images.githubusercontent.com/118953917/214899578-e074127a-75d3-4f4f-80c1-89001cd57860.png)
+	
 </details>
 
 <details>
