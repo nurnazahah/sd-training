@@ -7249,7 +7249,7 @@ cd ~/Desktop/work/tools/openlane_working_dir/openlane/configuration
 vim README.md
 ```
 
-* Assuming power distrivution network has been successfully generated
+* Assuming power distribution network has been successfully generated without being encountered by any error
   
 ![image](https://user-images.githubusercontent.com/118953917/215117743-5048a812-29a0-42cb-9863-a8c497402b80.png)
   
