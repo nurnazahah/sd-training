@@ -7286,7 +7286,7 @@ vim README.md
 </details>
 
 <details>
-  <summary>Theory 2: TritonRoute Feature2 & 3 - Inter-guide connectivity and intra- & inter-layer routing</summary>
+  <summary>Theory 2: TritonRoute Feature 2 & 3 - Inter-guide connectivity and intra- & inter-layer routing</summary>
  
 ### TritonRoute Feature 2 & 3 - Inter-guide connectivity and intra- & inter-layer routing
   
