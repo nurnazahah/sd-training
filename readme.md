@@ -7379,6 +7379,6 @@ vim README.md
 
 * Creating a new spef file that requires merged.lef and picorv32a.def
 
-![image](https://user-images.githubusercontent.com/118953917/215120595-1fd696bd-0a6f-4904-a31b-66c300db50ed.png)
-
+![image](https://user-images.githubusercontent.com/118953917/215129767-a7fa598b-a2c3-4c20-9f58-a967493567aa.png)
+	
 </details>
