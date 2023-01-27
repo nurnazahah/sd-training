@@ -7202,7 +7202,7 @@ package require openlane 0.9
 prep -design picorv32a -tag 13-01_14-09
 ```
   
-*Note: If you want to retain the configurations form the last openlane job, you need to use the command “prep -design -tag ”. If you want to create a fresh run with new configurations but without changing the tag name, you need to use the command “prep -design -tag -overwrite”.*
+*Note: If we want to retain the configurations from the last openlane job, we need to use ```prep -design -tag```. If we want to create a fresh run with new configurations but without changing the tag name, we need to use ```prep -design -tag -overwrite```.*
 
 
 > In openlane
