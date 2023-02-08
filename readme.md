@@ -22,7 +22,7 @@
 * [ Day 17 - Design and characterise one library cell using Layout tool and spice simulator ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-17)
 * [ Day 18 - Pre-layout timing analysis and importance of good clock tree ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-18)
 * [ Day 19 - Final steps for RTL2GDS ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-19)
-* [ Day 20 -  ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-20)
+* [ Day 20 - Floorplanning and power planning labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-20)
 
 ## Day-0
 
