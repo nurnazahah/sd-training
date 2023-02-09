@@ -7627,5 +7627,39 @@ gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files/violators.rpt	 
 
 ![image](https://user-images.githubusercontent.com/118953917/217480198-b0ed756b-8c72-4969-b95c-480bbceb6082.png)
 	
+	
+### Observing for 40% of utilization
+	
+**Modifying constraints**
+	
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc.tcl
+```
+	
+![image](https://user-images.githubusercontent.com/118953917/217759090-7eb31412-14ed-4604-8da3-81b85447ddd1.png)
+	
+* Rerun the script in dc_shell and generate reports
+	
+**Generated vsdbabysoc.sdc after synthesis**
+	
+![image](https://user-images.githubusercontent.com/118953917/217759913-3466353f-7348-4904-bc93-26ed35fe5491.png)
+	
+**Modifying core utilization = 40% in top.tcl**
+	
+![image](https://user-images.githubusercontent.com/118953917/217760917-e17bb74b-4a65-4726-b8e2-da932beec9c8.png)
+
+**Output Layout**
+	
+* The core of DAC now seems to be bigger in size as compared to previous run where core utilization = 7%
+	
+![image](https://user-images.githubusercontent.com/118953917/217760159-f7f62af4-7a64-4fd9-ac0e-f6993a39235b.png)
+![image](https://user-images.githubusercontent.com/118953917/217760431-5db2e483-8a60-484d-859b-92361b3e3248.png)
+
+**Slacks**
+	
+![image](https://user-images.githubusercontent.com/118953917/217761640-e1b8d080-0ce0-4c81-abd7-d49e93aa8d7f.png)
+![image](https://user-images.githubusercontent.com/118953917/217761810-f55ca130-d380-4c83-95ad-7d804ff46d38.png)
+![image](https://user-images.githubusercontent.com/118953917/217761880-92aec188-2e61-46c2-b3df-a1a4ca1073c8.png)
+	
 </details>
 
