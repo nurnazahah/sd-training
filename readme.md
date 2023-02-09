@@ -7657,9 +7657,12 @@ gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc.tcl
 
 **Slacks**
 	
+* The slack seems to be decreased from the previous run
+	
 ![image](https://user-images.githubusercontent.com/118953917/217761640-e1b8d080-0ce0-4c81-abd7-d49e93aa8d7f.png)
-![image](https://user-images.githubusercontent.com/118953917/217761810-f55ca130-d380-4c83-95ad-7d804ff46d38.png)
 ![image](https://user-images.githubusercontent.com/118953917/217761880-92aec188-2e61-46c2-b3df-a1a4ca1073c8.png)
+![image](https://user-images.githubusercontent.com/118953917/217762584-9f20bb48-b4b0-48cf-bc9a-53aca3819d87.png)
+
 	
 </details>
 
