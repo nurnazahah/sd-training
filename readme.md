@@ -23,6 +23,7 @@
 * [ Day 18 - Pre-layout timing analysis and importance of good clock tree ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-18)
 * [ Day 19 - Final steps for RTL2GDS ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-19)
 * [ Day 20 - Floorplanning and power planning labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-20)
+* [ Day 21 - Placement and CTS labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-21)
 
 ## Day-0
 
