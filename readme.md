@@ -7666,3 +7666,132 @@ gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc.tcl
 	
 </details>
 
+## Day-21
+
+### Topic: Placement and CTS labs
+
+<details>
+  <summary>Theory</summary>
+ 
+### Placement
+  
+* Pre-placement sanity check: floating pins in netlist, unconstrained pins, timing, pin direction mismatch, and etc.
+  
+**What is placement?**
+  
+* Standard cell
+* Placement stages including:
+  + Global placement
+  + Legalization
+  + Detailed placement
+  
+**Placement objectives**
+  
+* Congestion
+* Performance
+* Timing
+* Routability
+* Runtime
+  
+### Clock Tree Synthesis (CTS)
+  
+**Inputs of CTS**
+  
+* Placement DB
+* CTS Spec file
+  
+**CTS Steps**
+  
+1. Clustering
+2. DRV Fixing
+3. Insertion Delay Reduction
+4. Power reduction
+5. Balancing
+6. Post-conditioning
+  
+**CTS Quality Checks**
+  
+* Skew
+* Pulse width
+* Duty cycle
+* Latency
+* Clock tree power
+* Signal integrity and Crosstalk 
+* Timing analysis and fixing
+  
+*Source: notes were taken from lecture slides*
+  
+</details>
+
+<details>
+  <summary>Lab</summary>
+ 
+### Placement, CTS and Routing
+  
+**Using core utilization = 40% in top.tcl**
+  
+**Script in top.tcl**
+  
+* ```create_placement``` is used to create placement for the design. ```floorplan``` option is selected to make the design planning styled as placement. 
+* Pin Placement is done by sourcing pns.tcl to sync with the current technology file regarding power grid creation.
+  
+![image](https://user-images.githubusercontent.com/118953917/218297745-96602f27-19c0-44a6-979e-e81bf0bc81cf.png)
+![image](https://user-images.githubusercontent.com/118953917/218297768-d0730840-039b-4ccc-a2d3-a2002d5d9141.png)
+
+**Reports that were generated from the run**
+  
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/rpts_icc2/place_pins/check_design.pre_pin_placement
+```
+  
+* There are 3 warnings in total for pre-placement while checking the design.
+  
+![image](https://user-images.githubusercontent.com/118953917/218298713-739fb52c-e1e5-4e39-8de7-17e8789cd72c.png)
+  
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/rpts_icc2/place_pins/report_port_placement.rpt
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/218299564-5e967467-86e8-422a-aaff-f257de6513d4.png)
+  
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/icc2_output.txt
+```
+![image](https://user-images.githubusercontent.com/118953917/218299493-57808111-de38-4335-b5f0-9b318f396143.png)
+![image](https://user-images.githubusercontent.com/118953917/218298961-aefdde53-150b-4f37-83de-ce857be8f10e.png)
+  
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/rpts_icc2/timing_estimation/vsdbabysoc.post_estimated_timing.rpt
+```
+  
+* Post estimated timing report for the design shows the slack has met with the value of 0.67
+
+![image](https://user-images.githubusercontent.com/118953917/218299368-03ff1290-7716-45ee-a329-ca1d90f110d2.png)
+
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/rpts_icc2/timing_estimation/vsdbabysoc.post_estimated_timing.qor
+```
+  
+* Post estimated timing qor shows there is no violating path reported with 92 nets having violations, 79 max trans violations, and 83 max cap violations.
+  
+![image](https://user-images.githubusercontent.com/118953917/218299765-d3206736-8890-4cea-8e50-5a602b27254d.png)
+  
+```
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/rpts_icc2/timing_estimation/vsdbabysoc.post_estimated_timing.qor.sum
+```
+  
+* Summary of Post estimated timing qor
+  
+![image](https://user-images.githubusercontent.com/118953917/218299961-09f62744-36a4-4d49-8749-616a64b94490.png)
+
+**CTS schematic design**
+  
+*Note: before CTS, the clock would be ideal, while after CTS, the clock will be propagated*
+  
+![image](https://user-images.githubusercontent.com/118953917/218315845-f5377f9c-c93c-4be1-8fa1-38723bc24b0c.png)
+
+![image](https://user-images.githubusercontent.com/118953917/218317392-6ae95cc9-a0bd-4dc2-83f8-779f972ba514.png)
+
+  
+</details>
+
