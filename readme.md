@@ -24,6 +24,7 @@
 * [ Day 19 - Final steps for RTL2GDS ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-19)
 * [ Day 20 - Floorplanning and power planning labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-20)
 * [ Day 21 - Placement and CTS labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-21)
+* [ Day 22 - CTS analysis labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-22)
 
 ## Day-0
 
