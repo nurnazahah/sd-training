@@ -25,6 +25,7 @@
 * [ Day 20 - Floorplanning and power planning labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-20)
 * [ Day 21 - Placement and CTS labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-21)
 * [ Day 22 - CTS analysis labs ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-22)
+* [ Day 23 - Clock gating technique ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-23)
 
 ## Day-0
 
