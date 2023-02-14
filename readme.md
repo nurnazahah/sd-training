@@ -8177,11 +8177,11 @@ report_timing -from core/CPU_is_add_a3_reg -to core/CPU_Xreg_value_a4_reg[24][31
   
 **Comparison reports before and after ECO**
   
-* Timing perspective --> the timing has improved
-  
 ```
 report_qor
 ```
+	
+* Timing perspective --> the timing has improved
   
 ![image](https://user-images.githubusercontent.com/118953917/218699141-b4f53577-adfb-403b-ae38-447ec1b11b44.png)
   
@@ -8189,11 +8189,11 @@ report_qor
   
 ![image](https://user-images.githubusercontent.com/118953917/218699223-9a3ead61-bd63-42f5-bf11-7677a35383a0.png)
   
-* Power perspective --> theoretically, total power usage will increase since the area has increased due to upsizing cell. However, the power usage for both pre and post CTS are the same since the total area increased is not that much.
-  
 ```
 report_power
 ```
+	
+* Power perspective --> theoretically, total power usage will increase since the area has increased due to upsizing cell. However, the power usage for both pre and post CTS are the same since the total area increased is not that much.
 
 ![image](https://user-images.githubusercontent.com/118953917/218699307-226d4417-e434-4676-89c0-29119e26f237.png)
   
