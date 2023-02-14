@@ -8200,7 +8200,7 @@ report_power
 ### Adding in decaps
   
 ```
-gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/top.tcl       (Insert decaps command in top.tcl)
+gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/top.tcl       	(Insert decaps command in top.tcl)
 source /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/top.tcl
 gvim /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/icc2_output.txt
 ```
