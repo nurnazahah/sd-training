@@ -28,7 +28,7 @@
 * [ Day 23 - Clock gating technique ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-23)
 * [ Day 24 - Timing violations and ECO ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-24)
 * [ Day 25 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-25)
-* [ Day 26 - ](
+* [ Day 26 - ](https://github.com/nurnazahah/sd-training/blob/main/readme.md#day-26)
 
 ## Day-0
 
