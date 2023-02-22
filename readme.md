@@ -8677,3 +8677,294 @@ report_si_aggressor_exclusion
 </details>
 
 To be continue
+
+## Day-28
+
+### Topic: Introduction to DRC/LVS 
+
+### Introduction to SkyWater SKY130
+<details>
+  <summary>Theory: Introduction to SkyWater PDKs and opensource EDA tools</summary>
+  
+### Introduction to Skywater PDK
+  
+* SkyWater Open Source PDK is a joint project between Google and SkyWater Technology Foundry, where it provides a fully open source Process Design Kit (PDK), and its related resources.
+  
+* SkyWater open PDK public repository contains:
+  + Documentation: https://skywater-pdk.readthedocs.io/en/main/
+  + PDK Library and files: https://github.com/google/skywater-pdk
+  + Community: https://invite.skywater.tools/
+  
+![image](https://user-images.githubusercontent.com/118953917/220237707-8bafcbff-c95a-456b-9fd4-7e666c1b034c.png)
+
+* "130" in SKY130 stands for the feature size, which is the length of smallest transistor that can be manufactured in the process.
+  
+### Open-Source EDA Tools
+  
+* Open_PDKs is a Makefile based installer that takes files from the SkyWater PDKs and reformats them for a number of open source EDA tools.
+  
+* Tools that is supported by open_pdks:
+  1. Magic
+  2. Klayout
+  3. Openlane
+  4. Xschem
+  5. Netgen
+  6. Ngspice
+  7. IVerilog
+  8. qflow
+  9. IRSIM
+  10. xcircuit
+  
+* The libraries supported by open_pdks are:
+  1. Digital standard cells i.e. sky130_fd_sc_hd
+  2. Primitive devices/analog i.e. sky130_fd_pr
+  3. I/O cells i.e. sky130_fd_io
+  4. 3rd party libraries i.e. sky130_ml_xx_hd
+  
+* Open_PDKs uses a common installed file system structure, where SkyWater PDKs are under ```/usr/share/pdk/sky130A/``` directory.
+  
+* There are 2 subdirectories under the main SKY130 PDK's directory.
+  + ```libs.tech```
+  + ```libs.ref```
+  
+* ```libs.tech``` --> containing all subdirectories for the open source tool setup.
+  
+* ```libs.ref``` --> containing the reference libraries in various formats.
+  
+* ```project_root/``` --> project directory that is containing subdirectories for each tool or flow needed.
+  
+### Physical Verification and Design Flow
+  
+* Physical verification is perfomed to check whether we have a mask layout that matches what we think the circuit should be.
+  
+* There are 2 major steps in physical verification.
+  + **Design Rule Checking (DRC)** --> to ensure that the layout matches all the rules provided by the foundy for the specific process.
+  + **Layout Vs. Schematic (LVS)** --> to ensure that the layout netlist matches the schematic netlist.
+ 
+</details>
+
+<details>
+  <summary>Lab: Tool installations and basic DRC/LVS design flow tools</summary>
+  
+### Opensource EDA Tools: Check Tool Installations
+  
+**Magic**
+  
+* Command ```magic``` in the command prompt to invoke magic interface. 
+  
+* A layout window and a console window that is used to run commands for layout and actions will be popped out.
+  
+* Tcl interpreter can be invoked in the terminal instead of seperate console window by using the option ```magic -noconsole```.
+  
+* Magic can also be run without graphics layout window using the option ```magic -dnull - noconsole```, and should be called as such when running from a script. 
+  
+* Command ```magic -dnull -noconsole filename.tcl``` is used to run magic in batch mode.
+  
+**Netgen**
+  
+* Command ```netgen``` in the terminal to invoke Netgen. It is completely command driven and has no graphics interface. The console window is a stock tcl interpreter as in Magic.
+  
+* Tcl interpreter can be invoked in the terminal instead of seperate console window by using the option ```netgen -noconsole```.
+  
+* Command ```netgen -batch source filename.tcl``` is used to run Netgen in batch mode.
+  
+* Netgen provides GUI window written in python that can be accessed using ```usr/local/lib/netgen/pyhton/lvs_manager.py```, though this interface hides many useful options that cannot be accessed with just this window itself.
+  
+**Xschem**
+  
+* Command ```xschem``` in the terminal to invoke Xschem. This should bring up a schematics window.
+  
+* Xschem has no seperate console window and uses native command line terminal for tcl commands, unlike Netgen and Magic.
+  
+* Command ```xschem --tcl filename.tcl -q``` is used to run Xschem in batch mode.
+  
+**Ngspice**
+  
+* Command ```ngspice``` in the terminal to invoke Ngspice in Linux.
+  
+* Ngspice has its own prompt and runs its own set of interpreter commands that aren't based on tcl. 
+  
+* Command ```ngspice -b``` is used to run Ngspice in batch mode.
+  
+### Creating Sky130 Device Layout In Magic
+  
+```
+cd /home/nur.nazahah.mohd.amri/Desktop
+mkdir inverter
+cd inverter
+mkdir xschem
+mkdir mag
+mkdir netgen
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220499836-65254833-457d-4234-b894-340f8013d663.png)
+  
+```
+cd xschem
+ln -s /usr/share/pdk/sky130A/libs.tech/xschem/xschemrc
+ln -s ln -s /usr/share/pdk/sky130A/libs.tech/ngspice/spinit .spiceinit
+cd ../mag/
+ln -s /usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc .magicrc
+cd ../netgen/
+ln -s /usr/share/pdk/sky130A/libs.tech/netgen/sky130A_setup.tcl setup.tcl
+```
+  
+**xscheme**
+
+```
+cd inverter/xschem/
+xschem
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220499889-19c52a2e-16d2-4bc5-9be5-a3c9e8f272e5.png)
+
+* This brings up a display for xschem with a lot of example schematics, SKY130 devices are shown in xschem as below.
+  
+*Note: Examples can be accessed by clicking the relevant rectangle and pressing the "E" key on the keyboard. We can return to the menu by pressing "CTRL+E". The "F" key resizes the schematic to fit the window.*
+  
+![image](https://user-images.githubusercontent.com/118953917/220499949-67b0a991-0082-4f97-bf3e-77e2a148c0e2.png)
+  
+**magic**
+
+```
+cd ../mag/
+magic
+magic -d XR     (To invoke a cairo graphics package that uses 3D acceleration to get better rendering than the default graphics)
+magic -d -OGL   (An OpenGL based graphics package)
+```
+  
+* This brings up 2 magic windows, with the layout window displaying "Technology: sky130A", along with many colors and icons displaying the available layers in this technology, as shown below.
+  
+![image](https://user-images.githubusercontent.com/118953917/220500607-d3316a91-8339-4df7-9475-3768d9f360cf.png)
+  
+* Useful Magic Shortcuts:
+  + Left and right mouse buttons --> to adjust the cursor box
+  + Shift+Z --> to zoom out
+  + Middle mouse button/P --> to select a layer (also known as painting)
+  + Key E --> to erase whatever is present in the cursor box (can also be done by clicking the middle mouse button on an empty part of the layout)
+  + Key V --> to view the entire layout
+  + CTRL+P --> opens up the parameter options for the selected device
+  + S key --> to select layers
+  + Typing "what" command in the magic console --> gives information on the selected layer
+  + ";" key --> to type commands in the magic console without moving between windows, until the Enter key is pressed
+  + I key --> to select a device
+  + M key --> to move the selected device
+
+* To edit Devices drop down buttons: Click on Devices 1 -> nmos (MOSFET)
+  
+* Select nmos (MOSFET) under "Devices 1" and set the width to 2 um, length to 0.5 um and fingers to 3.
+  
+![image](https://user-images.githubusercontent.com/118953917/220506020-3aa752a5-9940-49a8-adad-a79f115b651c.png)
+  
+![image](https://user-images.githubusercontent.com/118953917/220509577-9870bcde-5ec6-4b83-9f44-74a042da6952.png)
+
+* Changing the device type to sky130_fd_pr__nfet_g5v0d10v5
+  
+![image](https://user-images.githubusercontent.com/118953917/220510768-6080b79d-b78e-49ac-a7ed-1a9c9aaaec1b.png)
+
+### Creating Simple Schematic In Xschem
+  
+```
+cd ../xschem/
+xschem
+```
+  
+* Press "Insert" key to pop out Choose symbol window. Select the SkyWater library directory path to access SkyWater components and choose the fd_pr library. To create an inverter, a basic nfet and pfet are needed. Therefore, select nfet and pfet device from the insert window and place it anywhere in the schematic.
+  
+![image](https://user-images.githubusercontent.com/118953917/220518340-6c1f52c3-21a1-4bf7-8043-3f5bbba34cb4.png)
+  
+* As pins are not PDK specific, they can be found under the xschem library in the insert window. These are named as ipin.sym, opin.sym and iopin.sym. 
+  
+* Place the pins and use M key to move the components around on the schematic window. Use C key to copy the components and Del key to erase components. Make use of W key to insert wires between components and make connections. 
+  
+* Rename each pin to something sensible using the Q key to bring up the parameter window.
+  
+* Select the components by clicking on them and click Q key to bring up the parameter windows to configure the properties of the devices. 
+  
+* For **nfet**, change the length to 0.18 as the default value of 0.15 is restricted to sram devices only. Set the number of fingers to 3, and the width of each finger to 1.5. 
+  
+* Since we have 3 fingers now, the total width in the parameter window must be set to 3 times of the finger width, which is 4.5. 
+  
+* Similarly, for **pfet**, adjust the parameters to 3 fingers, width of 1 per finger, and a length of 0.18. We must specify the body to be connected to the Vdd pin as it is a 3 pin pfet.
+  
+![image](https://user-images.githubusercontent.com/118953917/220520320-0af30699-82b8-4369-9d89-fb68fa3e0fce.png)
+
+* Save the design by clicking tab File --> save as --> inverter.sch
+  
+### Creating Symbol And Exporting Schematic In Xschem
+  
+* To functionally validate the schematic, testbench that is separated from the schematic must be created. 
+  
+ * Firstly, create a symbol for the schematic as the schematic will appear as a symbol in the testbench. To do this, click on the Symbol menu and select "Make symbol from schematic". Then, create a testbench schematic using new schematic option and insert the generated symbol from the local directory using the Insert key.
+  
+* Select new schematic in File tab and choose inverter.sch under home directory and paste it on the schematic window.
+  
+* The testbench will be very simple where we will generate a ramp input and observe the output response after connecting the power supplies. To do this, insert 2 voltage sources from the default xschem library, one for the input and one for the supply. Connect these and add a GND node to the supply connections. Create "ipins" and "opins" for the input and output signals to observe in Ngspice. 
+  
+* Supply voltage is set to 1.8 V. For the input voltage, we must set the supply to a piece-wise linear function to get ramp. PWL function has voltage and time values stated that the supply will start at 0v, then start to ramp up from 20 ns till it reaches its final value at 900 ns of 1.8 V. 
+  
+* Next, place two more statements for ngspice, but as these aren't specific to any component, they must be placed in text boxes. To place a text box, select the code_shown.sym component under the xschem library.
+  
+* The first text box will specify the location of the device models used in the device schematic, where it is using a .lib statement that selects a top level file that tells ngspice where to find all the models and also specifying a simulation corner for all the models. The first block specifying the typical corner with ```value = ".lib /usr/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt"```. 
+  
+* For the second block, it specifies;
+```
+value = ".control
+tran 1n 1u
+plot V(in) V(out)
+.endc"
+```
+  
+* This will tell ngspice to run a transient simulation for 1 ns and monitor voltages for the in and out pins. Therefore, a complete testbench schematic is shown as below, and save this as inverter_tb.sch
+  
+![image](https://user-images.githubusercontent.com/118953917/220539048-6f9c5a5c-10f7-45e0-be88-52af87624eb3.png)
+
+* To generate the netlist, click on the Netlist button, then simulate it in Ngspice by clicking the Simulate button. 
+  
+* The waveform confirms that the schematic behaves as an inverter as shown below.
+  
+![image](https://user-images.githubusercontent.com/118953917/220541463-5897304d-d91e-4325-99ae-97bd59da2003.png)
+
+* After verified the schematic, create a layout for it. To do this, go back to the inverter schematic. 
+  
+* Firstly, click on the Simulation menu and select "LVS netlist: Top Lvel is a .subckt" option. 
+  
+* Wait a few seconds and go back to the Simulation menu to check whether a tick mark appears beside the aforementioned option. This verifies if we have properly defined a sub circuit for creating a layout cell with pins in the layout. 
+  
+* Finally, generate a netlist for the schematic by clicking the Netlist button and exit Xschem.
+  
+### Importing Schematic To Layout And Inverter Layout Steps
+  
+```
+cd ../mag/
+magic -d XR
+```  
+  
+* Import the schematic to the layout in Magic by running the magic, then click on File -> Import SPICE and then select the inverter.spice file from the xschem directory. If done correctly, the following layout has been opened up in magic.
+  
+![image](https://user-images.githubusercontent.com/118953917/220548501-d5759edd-b58c-4149-8490-f560e0906740.png)
+![image](https://user-images.githubusercontent.com/118953917/220548959-0d23c844-8ca0-4112-a574-6a7e900f7516.png)
+
+* Referring to the layout generated above, the schematic import does not know how to do analog placing and routing as it is very complicated. Therefore, We must place them in the best positions and wire them up manually. 
+  
+* Firstly, place the pfet device above the nfet and adjust the placement of the input, output and supply pins. Refer below figure.
+  
+![image](https://user-images.githubusercontent.com/118953917/220553775-6486d0f0-3144-48c1-815f-cae9f2dfb513.png)
+
+* Next, set some parameters that are only adjustable in the layout which will make it more convenient to wire the whole layout up. 
+  
+* To pop out the parameter editing section, use S key and press I key to select the object, then use CTRL+P to open up the parameter options for the selected device.
+  
+* Set the "Top guard ring via coverage" to 100. This will put a local interconnect to metal1 via ta the top of the guard ring. Next, for "Source via coverage", put +40 and for "Drain via coverage", put -40. This will split the source drain contacts, making it easy to connect them with a wire. 
+  
+* For nfet, set the "Bottom guard ring via coverage" to 100, while the source and drain via coverages are set to +40 and -40, respectively, like the pfet.
+  
+* Start to paint the wires using metal1 layers by connecting the source of the pfet to Vdd and source of the nfet to Vss. Next, connect the drains of both mosfets to the output. Finally, connect the input to all the poly contacts of the gate. 
+  
+![image](https://user-images.githubusercontent.com/118953917/220634394-2cc70484-4070-42d7-af1d-c534af076da4.png)
+
+* Save the file and select the autowrite option. 
+	
+To be continue
+	
+</details>
