@@ -8676,6 +8676,40 @@ report_si_aggressor_exclusion
 ```
   
 </details>
+	
+### Lab
+<details>
+  <summary>Lab</summary>
+  
+### Lab
+  
+> In icc2_shell
+```
+source /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/top.tcl
+update_timing
+write_parasitics -format spef -output vsdbabysoc_spef
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220655729-977b5f00-e99e-4400-9bba-8d60e4851ac5.png)
+  
+```
+gzip -d /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/write_data_dir/vsdbabysoc/vsdbabysoc.pt.v.gz
+cp /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/write_data_dir/vsdbabysoc/vsdbabysoc.pt.v /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/
+```
+  
+> In pt_shell
+```
+set target_library "/nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/sky130_fd_sc_hd__tt_025C_1v80.db"
+set link_library [list /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/sky130_fd_sc_hd__tt_025C_1v80.db]
+###read_verilog /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/report/vsdbabysoc_gtlvl.v
+read_verilog /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc.pt.v
+link_design
+current_design
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220685160-8786848f-2343-4df4-9be1-1fcd8b5c8c47.png)
+  
+</details>
 
 To be continue
 
@@ -8969,3 +9003,4 @@ magic -d XR
 To be continue
 	
 </details>
+
