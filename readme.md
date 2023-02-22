@@ -9000,7 +9000,7 @@ magic -d XR
 
 * Save the file and select the autowrite option. 
 	
-To be continue
-	
 </details>
 
+	
+To be continue
