@@ -8711,7 +8711,7 @@ current_design
   
 </details>
 
-To be continue
+
 
 ## Day-28
 
@@ -9000,7 +9000,790 @@ magic -d XR
 
 * Save the file and select the autowrite option. 
 	
+* Run the following commands in the magic console.
+  
+```
+extract do local    (Ensuring that magic writes all results to the local directory)
+extract all         (Performing the actual extraction)
+ext2spice lvs       (Simulating and setting up the netlist to hierarchical spice output in ngspice format with no parasitic components)
+ext2spice           (Generating the spice netlist)
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220818458-c1c66460-eeb1-4730-8c2b-a3ac764171a0.png)
+  
+```
+rm *.ext                                          (Clear any unwanted files -> .ext files are just intermediate results from the extraction)
+/usr/share/pdk/bin/cleanup_unref.py -remove .     (Clean up extra .mag files -> files containing paramaterised cells that were created and saved but not used in the design)
+netgen -batch lvs "../mag/inverter.spice inverter" "../xschem/inverter.spice inverter"    (Run LVS by entering the netgen subdirectory)
+```
+  
+* Remember to always use the layout netlist first and schematic netlist second in the netgen command as in side by side, resulting the layout is on the left and the schematic is on the right. 
+  
+* Each netlist is represented by a pair of keywords in quotes, where the first is the location of the netlist file and the second is the name of the subcircuit to compare. 
+  
+* As we can see from the result below, there was an issue in the wiring and the netlists do not match. This is due to wiring errors in the layout.
+  
+![image](https://user-images.githubusercontent.com/118953917/220819365-90a4363d-2c28-4b7c-87a8-a38dc16681f8.png)
+  
+**Debugging errors in netlist, rerun and save layout**
+  
+```
+extract do local
+extract all
+ext2spice lvs
+ext2spice cthresh 0     (Tells magic to add all the parasitic capacitances to the spice netlist)
+ext2spice
+```
+
+* Referring to the netlist file below, there are multiple lines beginning with C, which detail the parasitic capacitances.
+  
+```
+vim inverter.spice 
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220836829-6b35e6a9-19a8-41f0-b85a-1eba2ef39a99.png)
+
+```
+cp ../xschem/inverter_tb.spice .
+vim inverter_tb.spice
+```
+  
+* Modify the test bench netlist file.
+  
+![image](https://user-images.githubusercontent.com/118953917/220838344-940395c3-c800-4330-a236-78ee3ecc8be6.png)
+
+```
+/usr/share/pdk/bin/cleanup_unref.py -remove .
+cp ../xschem/.spiceinit .
+ngspice inverter_tb.spice
+```
+  
+* The result is almost the same as in previous simulation in xschem.
+  
+![image](https://user-images.githubusercontent.com/118953917/220866522-c7d71cdd-8749-42a9-99f4-a9ccf70c3989.png)
+  
 </details>
 
+
+### DRC/LVS Theory and labs
+<details>
+  <summary>Theory: Introduction to DRC and LVS</summary>
+  
+### Fundamentals of Physical Verification
+  
+* As chip gets denser, the scale of physical verification increases. 
+  
+* Chip designs can be hierarchical, while physical verification cannot. 
+  
+* Two primary aspects of physical verification are: 
+  1. Design Rule Checks (DRC) --> Ensures that the design layout meets all the silicon foundry rules for mask making.
+  2. Layout vs Schematic (LVS) --> Ensures that the design layout electrically matches the design, as implemented in schematic form or any form that electrically describes the design specifications. 
+  
+* Since the chips are designed from a single source (RTL design), the LVS is now checking the design through different flows where:
+  1. Starting at the RTL source and working forwards.
+  2. Starting at the finished layout and working backwards. This way the tools used cross check each other.
+  
+![image](https://user-images.githubusercontent.com/118953917/220867039-df1f63fd-aabb-4a69-81c8-9f93353faa72.png)
+
+* Basically, physical verification must check if any manual intervention has broken something. 
+  
+* However, for errors, it is looking for how the tool got it wrong and how we can modify the setups to overcome the problem. 
+  
+* Increasing the number of tools used, increases the robustness of the physical verification process.
+  
+### Understanding GDS Format
+  
+* For some form of standardisation to describe integrated circuits, a standard file format is needed. 
+  
+* Some common file formats are:
+  + Caltech Intermediate form (.cif)
+  + GDSII stream format
+  + Open Artwork System Interchange Standard (OASIS)
+  
+* GDSII format is an industry standard accross foundries for representing IC layouts. 
+  
+### Extraction Commands, Styles and Options In Magic
+
+* Extraction process: The layout tool needs to generate a netlist independently by looking at the other than the mask geometry of the layout. 
+  
+* Extraction in Magic has two stage process, wherein magic generates an intermediate netlist format called the .ext, after it is converted to the required netlist format like spice.
+
+![image](https://user-images.githubusercontent.com/118953917/220926384-dfe4bbcb-815d-40e0-9bb6-c2358abaeedb.png)
+
+* All devices, instances, connections between cells, subcells, nets, as well as parasitics are present in the netlist. 
+  
+* The netlist can be fed into a simulator such as Ngspice, along with a schematic captured netlist to compare the results of the two.
+  
+* Eventhough magic can create a netlist for simulation, the tool don't know on how to actually simulate the netlist. 
+  
+* Thus, to simulate a netlist from a layout, we must provide all the missing information including the testbench netlist, along with the necessary stimuli for simulation. 
+  
+* As the layout editor knows nothing about the actual device models, we need to use include statements to add all device models used in the layout. 
+  
+* Subcircuit netlist is the generated netlist from the layout editor and must be included as well. 
+  
+* Finally, an analysis control block is needed to tell the simulator what kind of simulation to run as well as its simulation parameters.
+  
+* There are three extraction styles available in magic: 
+  1. ngspice()
+  2. ngspice(orig) 
+  3. ngspice(si)
+  
+* Those styles can be selected using the commands below.
+  
+```
+extract style ngspice()
+extract style ngspice(orig)
+extract style ngspice(si)
+```
+  
+* Some extraction options in magic are as follows.
+  
+```
+ext2spice lvs
+ext2spice cthresh value
+ext2spice scale on|off
+ext2spice hierarchy on|off
+ext2spice subcircuit top on|off
+ext2spice global on|off
+ext2spicemerge on|off
+```
+  
+*Note: Magic also stores layer heights/thicknesses, and a three dimensional view of the layout can be rendered by magic's 3D engine using the menu button Option -> 3D Display.* 
+  
+### GDS Reading and Writing in Magic
+  
+* GDS files can be accessed in Magic with the ```gds``` command. 
+  
+* To read a GDS file in magic, use ```gds read file_name```. 
+  
+* Some important read options for gds files in magic are listed below.
+  
+```
+gds readonly true|false  (Allows ceratin cells to be read-only, preventing magic from changing their gds descriptions in the final output gds file)
+gds flatglob expression  (Flattens cells in question to be merged up into the hierarchy above them, preventing unnecessary hierarchy in the layout)
+gds flatten true
+gds noduplicates true    (Tells magic to ignore cell definitions in gds files that it already has in memory)
+```
+  
+* GDS files can be written in magic using the command ```gds write file_name```, and some of its options are listed below.
+  
+```
+gds library true      (Used to create gds library files with subcells with no concept of a top level layout)
+gds addendum true     (Ignores read-only cell definitions when it generates an output)
+gds merge true|false  (Turns rectangles and triangles present in the design into merged polygons for easier viewing)
+```
+
+### DRC Rules in Magic
+  
+* Magic implements an interactive DRC, wherein it shows DRC errors when we make them. 
+  
+* As this process is computationally expensive, magic uses 3 styles for running DRC, namely:
+  1. drc(full) - complete checks (slow)
+  2. drc(fast) - typical checks (fast)
+  3. drc(routing) - metal checks (fastest)
+  
+### LVS Setup for Netgen
+  
+* Netgen is a tool used for running LVS checks. It knows nothing about layouts, and only knows about netlists and how to read and compare them.
+  
+* Netgen does not need to know anything about any components in the design, it juts needs to know wheter they match in the layout and schematic.
+  
+* LVS technology setup file tells the LVS tool what all the device names are, how they should or shouldn't be combined in series and parallel, whether any pins on the device are permutable (interchangeable), which properties are interesting to compare between netlists, which properties should be ignored, and whether any device must be ignored.
+  
+### XOR Verification
+  
+* This is a physical verification method used to compare 2 layouts. Here, an XOR operation is applied on the masks of the two layouts where both the masks either have nothing or share the same geometry, we see nothing, and only where one mask has something and the other mask has nothing, or vice versa, do we see something. This is useful in mask revisions.
+  
+* To run an XOR operation in Magic, we can use the following commands.
+  
+```
+load layout1_name
+flatten destination_name
+load layout2_name
+xor destination_name
+```
+  
+</details>
+
+<details>
+  <summary>Lab: Labs for GDS read/write, extraction, DRC, LVS and XOR setup</summary>
+  
+### GDS Read
+  
+```
+cd /home/nur.nazahah.mohd.amri/Desktop
+mkdir lab2
+cd lab2
+mkdir mag
+cd mag
+cp /usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc ./.magicrc
+magic -d XR &
+```
+  
+> In tkcon (Magic console)
+```
+cif listall istyle    (To view the possible styles)
+cif list istyle       (To see the current style)
+cif istyle xxx
+gds read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds      (Read the GDS files from the PDK)
+cellname top          (To see the available top level cells)
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220935614-fc72ebd7-659d-4628-a898-d05da6d441a0.png)
+  
+* Since it is a library, the console lists all the subcells.
+  
+* The same thing can be accessed with the menu button Options -> Cell Manager -> sky130_fd_sc_hd__and2_1. We shall load a simple and2_1 cell as shown below.
+
+![image](https://user-images.githubusercontent.com/118953917/220935709-3a014798-5960-41f6-81b2-7c7750fad832.png)
+
+> In magic console
+```
+gds read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds
+cif istyle()
+```
+  
+* Referring to the below figure, the labels in the layout view are marked yellow, which means they are treated as regular text. 
+  
+```
+cif istyle sky130(vendor)       (Change style)
+gds read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds
+```
+  
+* The current and2_1 layout will automatically be overwritten. 
+  
+* Here, the labels are colored blue, which means they are treated as ports. This shows that when dealing with vendor files, it is wise to use the vendor style.
+  
+![image](https://user-images.githubusercontent.com/118953917/220938107-ac0a9ccd-7acf-4798-b3e8-229311110327.png)
+  
+> In magic console
+```
+gds noduplicates true   (If don't want to automatically overwrite existing cells when reading from gds)
+gds read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds
+```
+
+![image](https://user-images.githubusercontent.com/118953917/220940204-9633aa96-edf5-47ae-a4b6-ee978bec1b69.png)
+
+### Ports
+  
+> In magic console
+```
+port index    (To inquire ports on a layout)
+port first    (To find the index of the first port)
+port 1 name
+port 1 class
+port 1 use
+```
+  
+* Select a port and command as above. Note that we can only select one port at a time for this method.
+  
+![image](https://user-images.githubusercontent.com/118953917/220942541-c31db8e6-89cf-4a08-9c3e-d78a38dd6b1d.png)
+
+```
+ls /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/
+cd /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice/
+gvim sky130_fd_sc_hd.spice
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/220945910-98d17bf4-a64e-4123-ab2b-749c3320b5e6.png)
+  
+![image](https://user-images.githubusercontent.com/118953917/220945712-ebf92bca-28ab-403b-8cbe-afa62467bd8d.png)
+
+* While the cell definition shows the first port to be port A, the gds read of the file in magic shows the first port as VPWR. 
+  
+* The port order mentioned in the definition came from the vendor and should be considered correct. However, port numbering is considered metadata and is not included in gds file. 
+  
+* One way to add metadata to the gds file opened in magic is to read its corresponding lef file. 
+  
+```
+lef read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef    (To read the lef file)
+port 1 name
+port 1 class
+port 1 use
+```
+  
+* Here, the port order is not updated where the lef files do not contain port order metadata. However, port class and use information was imported. Unfortunately, port order is only captured in the spice files from a vendor, but magic has no spice read command as these files provide no layout information.
+  
+![image](https://user-images.githubusercontent.com/118953917/220948801-190f8292-7e85-499e-820e-f4cdae2b1aec.png)
+  
+```
+readspice /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice   (To read port order from spice files - use custom .tcl script and call it in the magic console) 
+port 1 name
+port 1 class
+port 1 use
+```
+  
+* Load the cell layout again from the Cell Manager and inquire the same port 1 information to check.
+  
+* The port is already updated and the information has updated.
+  
+![image](https://user-images.githubusercontent.com/118953917/220952878-3f48d16d-368a-4778-88dc-33a5e4b2ba20.png)
+
+### Abstract Views
+  
+* For abstraction, we cannot start with a cell in memory. Hence, we need to open a fresh Magic session and read the lef library and load the same and2_1 cell from the Cell Manager.
+  
+```
+lef read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef
+```
+  
+* If we check port information, we can see that port order metadata isn't present in the lef files.
+  
+![image](https://user-images.githubusercontent.com/118953917/220956130-8c847796-afb7-40b2-9d6e-f5eaac5bfd97.png)
+
+* Select one port and perform below command.
+  
+```
+port first
+port 1 name
+port 2 name
+port 3 name
+port 1 use
+port 1 class
+port 4 name
+```
+  
+* Port order metadata isn't present in the lef files.
+  
+![image](https://user-images.githubusercontent.com/118953917/220958273-82f1f7bd-ea60-44ba-bd98-2c1ed6365209.png)
+
+* Run the readspice script as before and load the cell again.
+  
+```
+readspice /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice   --> load from cell manager
+load test
+getcell sky130_fd_sc_hd__and2_1
+```
+
+* Note: after load cell, make an empty box in empty space in magic. Then, command getcell.
+  
+![image](https://user-images.githubusercontent.com/118953917/221087159-f0b22c55-70b1-4b17-b769-624595503e4d.png)
+  
+* Click an empty space outside the cell, select the cell and command as below.
+  
+```
+gds write test      (To write lef file to gds file)
+quit
+```
+ 
+![image](https://user-images.githubusercontent.com/118953917/221087135-119a66cb-2605-4800-83e1-826163867001.png)
+
+* Reinvoke magic and command as below.
+  
+```
+gds read test     (To read gds file)
+save test
+quit
+```
+
+![image](https://user-images.githubusercontent.com/118953917/221088032-f1780516-1a96-4fa6-8337-487913a40e9c.png)
+  
+```
+load test
+path                (Viewing standard cell contents from the library path)
+gds write test
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221089189-239a4430-ffd3-46f8-8943-4020f283f396.png)
+
+* Select the cell, hit the ">" key and perform command as below.
+  
+```
+property
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221089800-3452c845-5539-4ace-86bd-dd632789b41c.png)
+  
+* Highlight the cell by using key i and select the desired cell. Then, press ">" key and press scroller of the mouse to paint the selected layer using locali. 
+
+```
+cellname writeable sky130_fd_sc_hd__and2_1 true
+gds write test
+quit
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221118636-c88e4b74-43ce-44ae-a20a-d15ecaa7357d.png)
+
+```
+gds read test
+quit
+```
+```
+gds readonly true
+gds rescale false
+gds read /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds
+load sky130_fd_sc_hd__and2_1
+property
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221120672-80959213-dca1-4979-9c22-d029bbb8dc65.png)
+![image](https://user-images.githubusercontent.com/118953917/221122008-e5a32ddd-2457-4a9e-8a65-429e45aa40b2.png)
+
+### GDS Reading Option In Magic
+  
+```
+load sky130_fd_sc_hd__and2_1
+extract all
+ext2spice lvs
+ext2spice
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221124067-48afe37e-e238-425d-a6e2-905378a68710.png)
+
+```
+cd /home/nur.nazahah.mohd.amri/Desktop/lab2/mag
+gvim sky130_fd_sc_hd__and2_1.spice
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221125269-b8cc7f78-c82c-4b50-a749-e73e8b982d8c.png)
+
+```
+ext2spice cthresh 0     (Include the parasitic capacitances)
+ext2spice
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221126118-63ab8d90-3859-4bdc-9344-d4e879f5441b.png)
+
+```
+cd /home/nur.nazahah.mohd.amri/Desktop/lab2/mag
+gvim sky130_fd_sc_hd__and2_1.spice
+```
+  
+* Generated netlist containing lines starting with C to denote the parasitic capacitances as shown below.
+  
+![image](https://user-images.githubusercontent.com/118953917/221126438-0c103791-5d49-4eab-a618-2683e32eca59.png)
+
+```
+ext2spice cthresh 0.01
+ext2spice
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221127906-d80cd9b2-8932-4664-b920-066ef3940ad2.png)
+  
+```
+cd /home/nur.nazahah.mohd.amri/Desktop/lab2/mag
+gvim sky130_fd_sc_hd__and2_1.spice
+```
+
+![image](https://user-images.githubusercontent.com/118953917/221128105-c954f806-c614-4b41-8cb0-6d26e39e87cd.png)
+
+* Running a full R-C extraction
+  
+```
+ext2sim labels on
+ext2sim
+extresist tolerance 10
+extresist                 (Must select cell first before run the command)
+```
+  
+* This shows the number of resistor nets found usable, and creates a .res.ext file which holds information to modify the existing .ext file for R parasitics.
+  
+![image](https://user-images.githubusercontent.com/118953917/221130496-2e90681f-c35b-4516-b5a7-54a87bbb8070.png)
+  
+```
+ext2spice lvs
+ext2spice cthresh 0.01
+ext2spice extresist on
+ext2spice
+```
+  
+```
+cd /home/nur.nazahah.mohd.amri/Desktop/lab2/mag
+gvim sky130_fd_sc_hd__and2_1.spice
+```
+  
+* Generated netlist is now containing both R and C parasitic components as shown below.
+  
+* While this method does work, it is extremely time consuming for the large circuits. For large circuits, it is better to let the router conduct this job as it already knows where all the wires are supposed to connect.
+  
+![image](https://user-images.githubusercontent.com/118953917/221132106-a7cf8a37-c920-4785-aa21-4418fa18e8c1.png)
+
+### Setup For DRC
+  
+* To set up standard DRC, use the following commands to call a python script.
+
+```
+/usr/share/pdk/sky130A/libs.tech/magic/run_standard_drc.py /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/mag/sky130_fd_sc_hd__and2_1.mag
+ls -al *.txt
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221135334-4de470cf-02e6-4569-86ba-9c6988a2d1e2.png)
+
+```
+gvim sky130_fd_sc_hd__and2_1_drc.txt
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221136091-cd39f2cc-fcac-4da3-ba28-19d5907fd030.png)
+
+```
+load sky130_fd_sc_hd__and2_1 
+drc style
+drc listall style
+drc style drc(full)
+drc check               (Select cell first then run command)
+```
+  
+  * There are DRC errors in the vendor .mag file for the and2_1 subcell since the standard cell layouts do not have internal connections to the well and substrate to save room, and the layout depends on tap cells to make those connections.
+
+* The reason we haven't seen these DRC errors earlier in Magic is because the DRC script runs a full DRC check, while the default DRC style in Magic was a fast DRC. This is shown below.
+  
+![image](https://user-images.githubusercontent.com/118953917/221138529-bc1e3827-5586-459a-8536-2ee89b5974ae.png)
+
+```
+drc why
+drc find
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221139526-911925eb-62f2-41c0-b735-421dd91bce82.png)
+
+```
+load test2
+getcell sky130_fd_sc_hd__and2_1
+getcell sky130_fd_sc_hd__tapvpwrvgnd_1      (Select an empty space and run the command)
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221141961-1cbfded9-d476-4d93-a20c-a388648e4bf4.png)
+  
+* Add and align a tap cell in the existing layout, there are no more DRC errors in the top level.
+  
+* Use key I to select all, M to move.
+  
+```
+save test3
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221142740-12ae1b8a-a58c-42fa-9047-70c4ad376234.png)
+
+### Setup For LVS
+  
+```
+mkdir netgen
+cd netgen
+cp /usr/share/pdk/sky130A/libs.tech/netgen/sky130A_setup.tcl ./setup.tcl
+cd ../mag/
+magic -d XR sky130_fd_sc_hd__and2_1 &
+```
+  
+```
+ext2spice lvs
+ext2spice 
+quit
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221147630-8593129e-d1aa-4acf-b8d2-65018827920f.png)
+  
+```
+cd ../netgen/
+netgen -batch lvs "../mag/sky130_fd_sc_hd__and2_1.spice sky130_fd_sc_hd__and2_1" "/usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice sky130_fd_sc_hd__and2_1"
+```
+
+![image](https://user-images.githubusercontent.com/118953917/221148331-7984985b-50e4-4983-b9bd-c215163bdd08.png)
+
+### Setup For XOR
+  
+```
+cd ../mag/
+magic -d XR &
+load sky130_fd_sc_hd__and2_1
+save altered
+load altered
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221151613-553eb80d-9e0e-40bf-9542-96ab2985dad9.png)
+
+```
+erase li                           (Select cell first then run command)
+flatten -nolabels xor_test
+load sky130_fd_sc_hd__and2_1
+xor -nolabels xor_test
+load xor_test
+quit
+```
+
+![image](https://user-images.githubusercontent.com/118953917/221152723-05e15105-903d-467c-b47e-6fb18c87e71d.png)
+
+```
+magic -d XR &
+load test3
+flatten -nolabels xor_test
+xor -nolabels xor_test        (Select AND cell before run the command)
+load xor_test
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221194185-2bf924f1-5123-4358-bb42-1a58afd3beae.png)
+
+</details>
+
+### Front-end and back-end DRC
+<details>
+  <summary>Theory: Introduction to DRC rules</summary>
+  
+### Fundamentals of Design Rule Checking
+  
+* Every silicon manufacturing process has its own tolerances on the designs being manufactured. 
+  
+* These tolerances are dependant on the conditions and machines used in the fabrication environment, and are based on probabilities of expected failure/defects found in a manufactured batch, in parts per million. 
+  
+* Thus, each process has its own set of rules that need to be adhered to, and these rules are given on the geometry of the layout to prevent chip failure. 
+  
+* These are known as design rules, and the process of adhering to these rules is done by design rule checking.
+  
+### Back-end Metal Layer Rules
+  
+* Width Rule
+* Spacing Rule
+* Wide-Spacing Rule
+* Notch Rule
+* Minimum and Maximum Area Rules
+* Minimum Hole Area Rule
+* Contact Cut Rules
+
+</details>
+
+<details>
+  <summary>Lab: Labs for all DRC rules</summary>
+  
+### Lab For Width Rule And Spacing Rule
+  
+```
+cd /home/nur.nazahah.mohd.amri/Desktop
+git clone https://github.com/RTimothyEdwards/vsd_drc_lab
+cd vsd_drc_lab
+./run_magic
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221197881-2b2a1d8d-fb8d-4251-bedd-919494ba814c.png)
+
+* In magic, click on File tab -> open -> select exercise1.mag
+  
+![image](https://user-images.githubusercontent.com/118953917/221198422-a5acc4b4-03ec-44db-a8f5-bfdd9dc9bb43.png)
+
+* Select any object -> go to Drc tab -> DRC Report.
+  
+![image](https://user-images.githubusercontent.com/118953917/221199251-ec13c74a-b402-4c43-9a56-44fc7d825f78.png)
+
+![image](https://user-images.githubusercontent.com/118953917/221199825-711c55bc-a487-4ac0-af79-3f40243fcc42.png)
+  
+```
+box width 0.14um
+paint m2
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221201646-130b38e3-a181-4832-9082-a650860cb4de.png)
+
+* DRC report.
+  
+* The white dots on each of the metal1 pieces indicate 1 error, meaning magic counts this spacing error as 2 DRC errors, and by moving either of the rectangles away, the DRC error can be fixed. 
+  
+* We can do this by selecting any of the rectangles, and using the numpad keys 4 and 6 to move them. Or using the command ```move e 0.14um``` which moves the selected layer to the east.
+  
+![image](https://user-images.githubusercontent.com/118953917/221202561-04791f35-a01c-454e-91ac-f61c49efc97c.png)
+
+![image](https://user-images.githubusercontent.com/118953917/221203541-87aaf02b-07b6-48f1-bce7-6a6382590365.png)
+
+### Lab For Wide Spacing Rule And Notch Rule
+  
+* If we select the cursor box over the area and run a DRC report, we can find 2 errors. 
+  
+* The first is a regular spacing error for the smaller rectangle, and the second shows a wide spacing error for the larger rectangle.
+  
+![image](https://user-images.githubusercontent.com/118953917/221204374-91ed856f-b04e-4005-bf06-a2074515b003.png)
+
+* Fix can be done by moving either of the boxes by a distance of 0.4um away, as shown below.
+  
+```
+move w 0.4um
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221204803-0da1d0e5-7470-4bba-b681-6f69b181af33.png)
+
+* If we run a DRC report, it shows up as a spacing error, since notch errors are generally the same as spacing errors for most processes.
+
+![image](https://user-images.githubusercontent.com/118953917/221205173-0905a82d-b5b6-4a24-97b4-9271f67a9cb7.png)
+
+* As this is the same layer, we cannot simply move this around. 
+  
+* To fix this, we put the cursor box over one half of the shape. Next we use the area select or A key to select just the top portion of the shape like shown below.
+
+![image](https://user-images.githubusercontent.com/118953917/221206971-e85b7a15-7a83-4253-832f-58d8291b9951.png)
+
+### Lab For Via Size, Multiple Vias, Via Overlap and Autogenerate Vias
+  
+* Load exercise2.mag and look at exercise 2a. 
+  
+* Run a DRC report, we see it is a simple via size error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221211209-c4aa1cc4-6364-4f0c-be7d-54dd4b89c571.png)
+  
+* We can fix this easily by doing an area select and stretch operation twice. Once horizontally, and once vertically.
+
+![image](https://user-images.githubusercontent.com/118953917/221211898-f742f51a-f251-4724-bb16-e73144de279a.png)
+
+* For example 2b, we have a large via with an array of contact cuts. 
+  
+* We cannot see the contact cuts yet though, as Magic displays them as a single via for viewing ease. 
+  
+* To see the contact cuts, we can run the command ```cif see xxx``` to check the cif layer names.
+  
+![image](https://user-images.githubusercontent.com/118953917/221214193-f974d9cc-604c-40bb-b28d-8681e6bf57f2.png)
+  
+* Now let us explore example 2c. Here, we have an overlap error as shown below.
+
+![image](https://user-images.githubusercontent.com/118953917/221218146-f2291362-ee35-44d8-9145-c0622ad00d83.png)
+
+* To fix this, we can simply select the layer then use the box grow command as shown. Here, the c stands for center, which means grow around center. Next we paint in a layer of metal1 to fix the overlap error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221218331-375be2aa-c1b3-4df4-bf5b-dddd923bff0c.png)
+  
+* To automatically generate a via in Magic without any box manipulation, we can do the following. Let's see example 2d. If we use the wiring tool by cycling through the tools with the space key, we can quickly draw wires. By clicking SHIFT+left MB we can move up a metal layer until we reach the top most metal 5 layer. Similarly, we can move down layers with the SHIFT+right MB until we reach the metal interconnect.
+  
+![image](https://user-images.githubusercontent.com/118953917/221216035-4ab378fd-0d00-4b85-b47e-fc1eeeba6c9a.png)
+
+###  Lab For Minumum Area Rule And Minimum Hole Rule
+  
+* Load in example3.mag. Here, we have a layer of metal with the following DRC error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221226474-cd1ff7ff-c25c-44f9-840e-f1eaf29ffa3c.png)
+
+* To fix this, we can easily area select and stretch the layer to meet the requirement.
+  
+![image](https://user-images.githubusercontent.com/118953917/221226819-be6d062d-6042-442e-a486-2c0ceabe0706.png)
+
+*Note: Wire routes always meet the minimum area rules when using the wiring tool. However, when jumping up by 2 or more layers, it is possible to violate this rule,  where there isn't enough metal 1 to fit the minimum area rule, along with other violations.*
+  
+![image](https://user-images.githubusercontent.com/118953917/221227089-f81e2134-14dd-40e9-ab55-7fa0ae0f8bf3.png)
+
+* Next, example 3b. Here we have a minimum hole area violation, though Magic does not show it as one. 
+  
+* To see this DRC error, we need to run Magic in the full DRC mode. We can do this by clicking on the menu button DRC > DRC complete. Next we must tell Magic to update the DRC count, and then run a DRC report.
+  
+![image](https://user-images.githubusercontent.com/118953917/221227428-3f0335e7-2b94-4b7e-bc76-7ecb94f235c9.png)
+
+### Lab For Wells And Deep N-Well
+  
+* Load exercise5.mag. These derived layers look like a transistor, and we can check to see what the overlapping layer is considered as by using the command what shown below.
+  
+![image](https://user-images.githubusercontent.com/118953917/221228252-a93cd3bc-7186-4ca7-8f18-e3b4c42af6c8.png)
+
+* It is a nmoslvt layer. We can try to recreate this by painting in a layer of ndiff and poly and see what the overlapping layer becomes.
+
+![image](https://user-images.githubusercontent.com/118953917/221228563-478e3cb3-4b2d-41d5-99c9-d0192e2aa2b4.png)
+  
+* As we can see, Magic considers this as an nmos, and not an nmoslvt as before. 
+  
+* This is based on the instructions specified in the tech file, so to get a layer of nmoslvt, we must specifically paint in a layer of nmoslvt. We have learnt earlier about Magic's implant layers and how they are used for autogeneration. Let us visualize these implant layers with the following commands.
+  
+![image](https://user-images.githubusercontent.com/118953917/221228842-0215fda8-ad9e-4c5f-ad66-2cd0280c456e.png)
+
+* Similarly, we can see the implant lvt layer on the nmoslvt using the command below. This is what differentiates the nmoslvt from the nmos we just created.
+  
+![image](https://user-images.githubusercontent.com/118953917/221229028-802987c7-5522-4eee-9ce9-f79325d5a1fd.png)
+
+* Here we can check the layers with the ```what``` command as before.
+  
+![image](https://user-images.githubusercontent.com/118953917/221229289-6b3926c3-7f59-4455-9ca9-2042d00443f2.png)
 	
-To be continue
+</details>
+
+
