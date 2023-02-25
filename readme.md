@@ -8325,10 +8325,14 @@ Convert the digital signals to analog signals or vice versa using ADC/DAC
 ### AMS: Analog and Mixed Signal (digital and analog)
   
 **AMS flow**
+	
+*Source: notes are taken from lecture slides*
   
 ![image](https://user-images.githubusercontent.com/118953917/218935017-b6e05d14-a790-4607-8612-a27c89c5b98b.png)
 
 **Block diagram representation for mixed signal design**
+	
+*Source: figure was taken from lecture slides*
 
 ![image](https://user-images.githubusercontent.com/118953917/218935237-12b92d40-67b3-4777-aec7-15b6ad7fc9c2.png)
 
