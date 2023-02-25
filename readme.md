@@ -8705,7 +8705,6 @@ cp /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/shell/write_data_dir/vs
 ```
 set target_library "/nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/sky130_fd_sc_hd__tt_025C_1v80.db"
 set link_library [list /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsddac.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/avsdpll.db /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/sky130_fd_sc_hd__tt_025C_1v80.db]
-###read_verilog /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/report/vsdbabysoc_gtlvl.v
 read_verilog /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc.pt.v
 link_design
 current_design
