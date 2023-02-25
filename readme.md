@@ -8708,6 +8708,31 @@ current_design
 ```
   
 ![image](https://user-images.githubusercontent.com/118953917/220685160-8786848f-2343-4df4-9be1-1fcd8b5c8c47.png)
+	
+```
+read_sdc /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/func1.sdc
+set_app_var si_enable_analysis true
+read_parasitics -keep_capacitive_coupling /nfs/png/disks/png_mip_gen6p9ddr_0032/nazahah/lab/d20/files2/vsdbabysoc_spef.temp1_25.spef
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221361164-8254d2a7-3500-4b58-81cf-e53d3ac7121c.png)
+
+```
+check_timing
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221361327-bc2f7e6d-18dc-4ef7-9ae9-5ec08c886360.png)
+
+```
+report_si_bottleneck              (Report of the nets that have the largest crosstalk effects)
+report_bottleneck                 (Report of multiple min/max delay violation)
+report_si_delay_analysis
+report_si_aggressor_exclusion
+report_si_noise_analysis
+```
+  
+![image](https://user-images.githubusercontent.com/118953917/221361846-fb1eb9b4-a7fb-48e2-b102-aedad84a753f.png)
+![image](https://user-images.githubusercontent.com/118953917/221361902-76fd9833-8b53-40a4-910b-0114168c59f4.png)
   
 </details>
 
