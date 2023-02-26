@@ -9790,6 +9790,30 @@ move w 0.4um
 
 ### Lab For Wells And Deep N-Well
   
+* exercise4.mag has wells and taps, so our DRC check needs to be set at full to check for these. 
+  
+* In example 4a, we have a basic well error, since the wells do not have taps. 
+  
+* The n-well shows an error as it is currently floating, though the "p-well" does not since this process doesn't actually consider p-wells unless they are in deep n-wells, and are instead counted as p-substrates.
+  
+![image](https://user-images.githubusercontent.com/118953917/221407708-041c63bb-3cf9-45bc-b766-397d62eaaf39.png)
+
+* To fix this, we first paint a layer of n type material into the n well. The layer is called nsubstratendiff. Though this does not fix the DRC error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221407794-eeb95971-e19a-401c-a3d0-bf2eee636403.png)
+
+* n well must not be floating, so the tap should be connected to a layer of local interconnect. 
+  
+* Paint a layer of nsubstratencontact. While this gets rid of the n-well DRC error, it creates smaller errors like overlap and surround.
+  
+* Adjust the layers using what we have learnt till now by growing, stretching and adding in local interconnect, and we get no DRC errors.
+
+![image](https://user-images.githubusercontent.com/118953917/221407841-f0778a51-b758-4dfe-9bac-a813b5c0beed.png)
+
+![image](https://user-images.githubusercontent.com/118953917/221407900-8984bb2d-fc65-4752-b3ee-e0106c125b77.png)
+  
+###  Lab For Derived Layers
+  
 * Load exercise5.mag. These derived layers look like a transistor, and we can check to see what the overlapping layer is considered as by using the command what shown below.
   
 ![image](https://user-images.githubusercontent.com/118953917/221228252-a93cd3bc-7186-4ca7-8f18-e3b4c42af6c8.png)
@@ -9811,7 +9835,224 @@ move w 0.4um
 * Here we can check the layers with the ```what``` command as before.
   
 ![image](https://user-images.githubusercontent.com/118953917/221229289-6b3926c3-7f59-4455-9ca9-2042d00443f2.png)
-	
+  
+### Lab For Paramterized And PDK Devices
+  
+* Load exercise6.mag. Here, we have a parameterised device, which is a device create automatically using magic, and have fixed layouts in the PDKs. 
+  
+* It is a simple nmos (MOSFET) device created from the Devices 1 menu with default parameters. While this is a Magic generated device, it still shows up as having DRC errors as follows.
+  
+![image](https://user-images.githubusercontent.com/118953917/221396864-0068e3c2-77ca-41c7-9011-097a44cd1a95.png)
+
+* Th error is a metal minimum area rule error, and magic could avoid it by adding more metal to the layer, but it does not since these contacts will be routed to, and have metal connected to it anyway. We can go ahead and fix this by painting in some metal1 over the contacts, and we see no DRC errors.
+  
+![image](https://user-images.githubusercontent.com/118953917/221397378-167b5bca-bc17-4a63-b6ba-44f4da96d499.png)
+
+* Another example, we have an esdfet designed to survive high voltages, and it purposefully breaks design rules. For example, it has a transistor gate at an angle, which is not allowed.
+  
+![image](https://user-images.githubusercontent.com/118953917/221397508-e6e81b5d-eacd-429f-891b-ed6bb5562b3e.png)
+
+* The only way in Magic to ignore rule errors for a device that is known good, is to abstract it. Though abstract views are in a separate lef directory, but that is not what is needed here. 
+  
+* All library views are abstract in a way, because they contain pointers to gds files, and thus what is shown is no more than Magic's best attempt to represent the gds data. We can change the layout without changing what is written out to gds, which is dangerous and generally only used for read only files that do not get affected.
+  
+* However, we can use this to our advantage by making the layout look DRC clean and not flag false positives.
+
+* Select the cell with the I key, check its file path and change it to the current working directory. Next, we descend into the cell and save it to disk. Now, we can confirm that the cell still points to a valid gds file with the property command.
+  
+![image](https://user-images.githubusercontent.com/118953917/221398048-bade5bf8-8fd2-4c56-a1c2-223ec05dba1d.png)
+  
+* For exercise 6c, we first save it to the local disk as done earlier.
+  
+* Fix the DRC errors using the methods stated earlier.
+
+![image](https://user-images.githubusercontent.com/118953917/221398278-2859136b-91aa-4c9a-8431-1dd5e8531bfa.png)
+
+
+### Lab For Angle Error And Overlap Rule
+  
+* Magic has a grid set up that is based on the manufacturing grid provided. The manufacturing grid for this process is 0.005um x 0.005um. 
+  
+* Magic scales up the grid by a factor of 2, so the smallest box possible should be 0.01um by 0.01um. 
+  
+* To make the box any smaller, we can use snap internal then make the box to the size of the manufacturers grid. We could also scale down Magic's internal grid with scalegrid 1 2, but it is prohibited.
+
+* Similarly, if we create a tringle that is an odd number width, and overlap it with another odd width triangle, magic will try to legalise the overlap vertex as follows.
+  
+![image](https://user-images.githubusercontent.com/118953917/221398558-8c3d6d71-384f-4f62-ad58-414be74f0140.png)
+
+* Loading in exercise7.mag. 
+  
+* Here, the triangle based polygon was created into a subcell, then flipped and moved back to overlap. 
+  
+* This prevents Magic from compensating for the off-grid overlap by adding a rectangle at the vertex. The DRC error is as follows.
+  
+![image](https://user-images.githubusercontent.com/118953917/221399347-6f2fb2b8-5cb5-456c-b68d-86f09848545f.png)
+  
+* Fix this easily by selecting one of the shapes and moving it horizontally by one position.
+  
+![image](https://user-images.githubusercontent.com/118953917/221399373-fa0cd439-f3ac-42bf-8f2a-9238cb1fd4c8.png)
+
+* For 7b, we have the following error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221399599-4a8e556c-9265-4020-9751-42517f127c6c.png)
+  
+* The only ay to fix this, is to paint over the angled edge with some local interconnect.
+  
+![image](https://user-images.githubusercontent.com/118953917/221399623-6f463ccb-4ce2-4254-80ed-ddbcfaeef586.png)
+  
+* For 7c we have another angle error. 
+  
+![image](https://user-images.githubusercontent.com/118953917/221399812-e919d805-21a5-4a88-89dc-0ada71447e5a.png)
+  
+* The shape seems to be 45 degree angled, but by selecting it and querying the box, we see it is actual 201x200 units on the grid, leading to an angle just smaller than 45 degrees.
+  
+* We fix this with the following commands to erase and redraw the angled edge at 45 degrees.
+
+![image](https://user-images.githubusercontent.com/118953917/221399825-64b588ad-20de-4e68-8aca-d1bf35dfb8f9.png)
+
+* We can now add small amount of metal1 on top of the shape to compensate for the width error caused by the additional 1 unit growth, and we get a DRC error free shape.
+
+![image](https://user-images.githubusercontent.com/118953917/221399940-a3152174-f67f-4477-82ec-8db0337c7a46.png)
+
+* In 7d, we have an overlap error. This is because the poly and diff layers are in different cells, and then made to overlap. 
+  
+* While this should create a transistor in the overlap, because the two layers are in different cells, Magic does not allow this.
+  
+![image](https://user-images.githubusercontent.com/118953917/221400047-757423ba-9a19-4e9b-bf5a-bfa327fc8e2e.png)
+![image](https://user-images.githubusercontent.com/118953917/221400108-375b23cb-8146-494c-8b95-4f51eccc18be.png)
+
+* The easiest way to fix this is to just paint over the poly subcell again with a layer of poly, and preferably delete the old poly subcell layer. This creates a nmos as shown.
+  
+![image](https://user-images.githubusercontent.com/118953917/221400233-68f80ee6-e66a-4a1c-8816-ceeec1650669.png)
+
+* In 7e, we can see that overlaps in contacts have different rules. 
+  
+* If contacts overlap, they must overlap exactly, for the automatic generation rules. In this example, if we look at the contact cuts, we can see the following. 
+  
+* Here the overlapping contact cut has been pushed over to align properly.
+  
+![image](https://user-images.githubusercontent.com/118953917/221400532-a54ff4be-458f-4e9e-a818-d5dafe58251f.png)
+  
+![image](https://user-images.githubusercontent.com/118953917/221400520-342815b1-6530-4f72-a80b-e6f71024e45b.png)
+
+* To fix this, we can flatten it. 
+  
+* This is shown below where the flattened copy now is DRC free, as both contacts are now in the same layer and there is no concern of overlap.
+  
+![image](https://user-images.githubusercontent.com/118953917/221400825-819e6945-0f9f-419f-bfbe-8e3dc04b0030.png)
+
+### Lab For Unimplemented Rules
+  
+* In exercise8.mag, we have a seal ring. 
+  
+* Seal rings are just layers that have no electrical meaning, and are just a physical barrier between the chip and the outside world. These seal ring layers break multiple design rules, and are not worth the effort to include in the tech file. 
+  
+* Thus, Magic shows these seal rings as a kind of abstract view which is designed to be DRC free, with no properties associated with it. If we try to paint diffusion layers over this, we will get overlap errors.
+  
+![image](https://user-images.githubusercontent.com/118953917/221401065-875bfa70-18cb-4863-b1c8-9c49369932b8.png)
+
+* So the SkyWater PDK actually has a seal ring generator that can generate gds correct seal rings, though these cannot be imported into Magic unless as abstract views.
+
+* To generate seal rings, we need to know the size of the outer edge of our pad frame. We can use the seal ring generator with the command below.
+
+```
+/usr/share/pdk/sky130A/libs.tech/magic/seal_ring_generator/sky130_gen_sealring.py <width> <height> <target_directory>
+```
+  
+* This should create a .mag and .gds file in the directory. 
+  
+* Next, open the magic console and use the command ```addpath <created_directory>```, and then open up the seal ring file with ```load <file_name>```. 
+  
+* If we push into this abstract, we can see the ```property``` command for this references are just created .gds file. 
+  
+* Now, we can run a script launch for magic that runs magic with the appropriate tech file to view the seal ring, with the command ```./gds_magic```. 
+  
+* Then, load the gds file with gds ```read seal_test/adv_6um_gen``` to see the seal ring.
+  
+![image](https://user-images.githubusercontent.com/118953917/221401474-0427541c-2d76-4fdb-b521-f24d5fa172db.png)
+
+![image](https://user-images.githubusercontent.com/118953917/221401642-decf3e8a-8559-4283-bc48-0909aabce5b4.png)
+
+### Latch-up And Antenna Rules
+  
+* In exercise9.mag, we have a layout with standard cells that violates some of the basic rules we saw earlier, as well as depicts latch-up violations.
+  
+* First, we must add taps to the diffusion layers. Since it is a standard cell, it should come with a tap cell that is part of the standard cell library. We can place down the tap cell as follows.
+  
+![image](https://user-images.githubusercontent.com/118953917/221402476-9122723e-368f-4575-8274-17dc11cbcafe.png)
+
+* Select and move the tap cell to align it properly with the other cells, thus fixing the error.
+  
+![image](https://user-images.githubusercontent.com/118953917/221403064-e9356907-568b-49d0-94fc-d1731212dff9.png)
+
+* In exercise10.mag, which has a few standard cell layout with very long route between them.
+  
+* To run an electrical rule check, some knowledge of the circuit is required to evaluate the rule. To get knowledge of the circuit, the circuit needs to be extracted. 
+
+* Run an antenna check as follows. The antenna check shows up as feedback on the layout, and we can use feedback why for some more information on it.
+  
+![image](https://user-images.githubusercontent.com/118953917/221403655-773ed33a-ad36-4b36-b1ac-cff5c0d87b46.png)
+  
+* This gives us antenna ratios that triggered the error. 
+  
+* The ratio of the area of the metal to the area of the gate is more than twice the permissible value of 400. 
+  
+* There are 2 ways to fix this. First, we can tie down the route to a piece of diffusion (which acts like a diode). The antenna check tells us the error is at metal2, so we can place a standard cell diffusion diode anywhere at metal2. 
+  
+* In this example, the diode is already places on th left of the cell, and we just need to wire the input where the violation starts to the diode as shown below. The wire needs to be contacted down into the diode with the SHIFT+right MB.
+  
+![image](https://user-images.githubusercontent.com/118953917/221404086-c99a09a1-2e1b-4b67-a5c7-b99593bf5b29.png)
+
+* Now, if we extract and run an antenna check, we see no feedback and no error message. This means the antenna violation is cleared. Another way to fix an antenna violation is to manually check the route path and fix it.
+
+### Lab For Density Rules
+  
+* SkyWater uses a window size of 700 by 700 microns to run density checks. 
+  
+* exercise10.mag, has a large layout containing metal1 and metal2 layers.
+
+* Here, the metal1 layer is just a thin section going around the layout, which depicts under-density for that metal layer. 
+  
+* Similarly, metal2 covers pretty much the entire layout, leading to over-density for the metal2 layer. 
+  
+* To check for density coverage, we use the following commands as in figure below.
+
+* This agrees point that metal1 covers only 5.6% of the cell while metal2 covers 85.7%. 
+  
+* But foundries do not check for the average density across the whole layout, instead they do complicated calculations over fixed window sizes to find densities. Hence, we use a script to do this in Magic, using a script provided by the process PDK.
+
+* To do this, we first do ```gds write exercise_11``` in the Magic console, then open a new terminal to run the density check script as follows.
+
+![image](https://user-images.githubusercontent.com/118953917/221405298-c22df66b-f14c-4ccb-83e0-1cdee05c0132.png)
+  
+![image](https://user-images.githubusercontent.com/118953917/221405658-b4ab9240-b9e6-475a-ba2a-e2d1dd70d549.png)
+
+![image](https://user-images.githubusercontent.com/118953917/221405719-05cb914d-ae98-44e6-bf16-93428c012b81.png)
+
+* To fix this, we use a fill generator script provided by the PDK as follows.
+  
+![image](https://user-images.githubusercontent.com/118953917/221405829-fcf02d18-ecde-49c9-af9d-4202c2a32ec0.png)
+
+* Now we can go ahead and do a gds read of the generated file in magic with the command below.
+  
+![image](https://user-images.githubusercontent.com/118953917/221405971-3cd33f23-1146-431d-8d44-d0bdbdf473f4.png)
+
+* Here, we see the fill patterns generated for the entire layout. To see only a specific layer, for example metal2, we use the commands below. First we hide all layers, then show m2fill layer which is a special fill layer for metal2.
+  
+![image](https://user-images.githubusercontent.com/118953917/221406067-2fb0f6d4-1329-4d0b-ba6b-f85eb4361299.png)
+
+* Next, we must merge the patterns with the original layout. To do this, we load the exercise_11.mag file again. We have to ensure that while merging, the position of both the layout and fill patterns align properly. To do this, we follow the steps below.
+  
+![image](https://user-images.githubusercontent.com/118953917/221406988-96bfc09f-33dc-47bc-bccb-b98f79cff945.png)
+
+* Now, we can view just the metal2 layer in the layout to confirm that the fill patterns align perfectly after the merge.
+  
+* We can check for density coverage again by setting the cif output style to density. This is done so that the cover command checks for both the metal and fill layers instead of just the metal, and is done as follows.
+  
+* As we can see below, metal1 density is now within the permissible limits. However, metal2 is still way out of bounds, since not much can be done to fix over-density apart from physically removing metal layers from the design. The other layers like metal3 have now been filled as well, so they are all within the permissible density limits, instead of being empty with 0% density.
+  
+![image](https://user-images.githubusercontent.com/118953917/221407371-8ce11bbf-e9c4-419c-a65b-3f13ee2b554c.png)
+
+
 </details>
-
-
